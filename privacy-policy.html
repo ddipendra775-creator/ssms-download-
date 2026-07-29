@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSMS — Legal &amp; Privacy / कानूनी तथा गोपनीयता कागजात</title>
+<meta name="description" content="SSMS Privacy Policy, Terms of Service, Data Safety, Child Protection Policy and Disclaimer — English and Nepali.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@500;600;700&family=Noto+Serif+Devanagari:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F0E3;
+    --paper-deep:#EDE6D3;
+    --ink:#20293A;
+    --ink-soft:#4A5468;
+    --stamp:#8C3227;
+    --stamp-soft:#8C322722;
+    --brass:#9C7A2E;
+    --forest:#3B5D42;
+    --indigo:#33456B;
+    --slate:#5A5F63;
+    --line:#20293A22;
+    --radius:2px;
+    --serif:'Noto Serif','Noto Serif Devanagari',serif;
+    --sans:'Noto Sans','Noto Sans Devanagari',sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    background-image:
+      repeating-linear-gradient(transparent, transparent 37px, var(--line) 37px, var(--line) 38px),
+      radial-gradient(ellipse at top left, var(--paper-deep), transparent 60%);
+    background-attachment:local, fixed;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:var(--indigo);}
+  a:focus-visible, button:focus-visible, .tab:focus-visible{
+    outline:3px solid var(--stamp);
+    outline-offset:2px;
+  }
+
+  /* ---------- Header ---------- */
+  header.top{
+    position:relative;
+    padding:38px 20px 26px;
+    max-width:1080px;
+    margin:0 auto;
+    border-bottom:1.5px solid var(--ink);
+  }
+  .eyebrow{
+    font-family:var(--sans);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--stamp);
+    font-weight:600;
+    margin:0 0 10px;
+  }
+  .top-row{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .title-block h1{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:clamp(28px,4.2vw,44px);
+    line-height:1.12;
+    margin:0 0 6px;
+  }
+  .title-block .sub{
+    font-family:var(--serif);
+    font-size:clamp(17px,2.4vw,22px);
+    color:var(--ink-soft);
+    margin:0;
+  }
+  .top-actions{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-shrink:0;
+  }
+  .lang-switch{
+    display:inline-flex;
+    border:1.5px solid var(--ink);
+    border-radius:999px;
+    overflow:hidden;
+    background:var(--paper);
+  }
+  .lang-switch button{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:13px;
+    padding:8px 16px;
+    border:none;
+    background:transparent;
+    color:var(--ink-soft);
+    cursor:pointer;
+    letter-spacing:.02em;
+  }
+  .lang-switch button.active{
+    background:var(--ink);
+    color:var(--paper);
+  }
+  .back-link{
+    font-family:var(--sans);
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink);
+    text-decoration:none;
+    border:1.5px solid var(--ink);
+    padding:8px 14px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .back-link:hover{ background:var(--ink); color:var(--paper); }
+
+  /* ---------- Seal / signature element ---------- */
+  .seal{
+    position:absolute;
+    right:20px;
+    top:20px;
+    width:112px;
+    height:112px;
+    transform:rotate(-9deg);
+    opacity:.92;
+    filter:url(#inkRough);
+  }
+  @media (max-width:640px){ .seal{ display:none; } }
+
+  /* ---------- Layout ---------- */
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:0;
+    align-items:start;
+  }
+  @media (max-width:800px){
+    .wrap{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- Tabs (index) ---------- */
+  nav.index{
+    position:sticky;
+    top:0;
+    padding:26px 10px 26px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  @media (max-width:800px){
+    nav.index{
+      position:static;
+      flex-direction:row;
+      overflow-x:auto;
+      padding:16px 20px;
+      gap:8px;
+      border-bottom:1.5px solid var(--ink);
+      -webkit-overflow-scrolling:touch;
+    }
+  }
+  .tab{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 14px;
+    border:1.5px solid transparent;
+    border-left:5px solid var(--tab-color, var(--slate));
+    background:transparent;
+    font-family:var(--sans);
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ink-soft);
+    text-align:left;
+    cursor:pointer;
+    border-radius:0 3px 3px 0;
+    white-space:nowrap;
+    line-height:1.3;
+  }
+  .tab .ne{ display:block; font-size:13.5px; }
+  .tab .en{ display:block; font-size:10.5px; font-weight:500; opacity:.65; letter-spacing:.02em; }
+  .tab:hover{ background:var(--paper-deep); }
+  .tab.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-left-color:var(--tab-color, var(--stamp));
+  }
+  .tab.active .en{ opacity:.75; }
+
+  /* ---------- Document panel ---------- */
+  main{
+    padding:30px 24px 80px;
+    min-width:0;
+  }
+  .doc{ display:none; max-width:680px; }
+  .doc.active{ display:block; animation:rise .35s ease; }
+  @keyframes rise{ from{ opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  .doc-head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:4px;
+    flex-wrap:wrap;
+  }
+  .doc-head h2{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:clamp(22px,3vw,30px);
+    margin:0;
+    color:var(--doc-color, var(--ink));
+  }
+  .doc-head .stamp-chip{
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--doc-color, var(--stamp));
+    border:1.3px solid var(--doc-color, var(--stamp));
+    padding:3px 9px;
+    border-radius:999px;
+  }
+  .doc-sub{
+    font-family:var(--serif);
+    font-style:italic;
+    color:var(--ink-soft);
+    margin:2px 0 22px;
+    font-size:15px;
+  }
+
+  .meta-strip{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 22px;
+    padding:14px 18px;
+    background:var(--paper-deep);
+    border:1px dashed var(--ink);
+    border-radius:var(--radius);
+    margin-bottom:26px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .meta-strip span{ white-space:nowrap; }
+
+  .doc h3{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:17px;
+    color:var(--ink);
+    margin:26px 0 8px;
+    display:flex;
+    gap:10px;
+    align-items:baseline;
+  }
+  .doc h3 .idx{
+    font-family:var(--sans);
+    font-size:12px;
+    font-weight:700;
+    color:var(--paper);
+    background:var(--doc-color, var(--stamp));
+    padding:2px 7px;
+    border-radius:3px;
+    flex-shrink:0;
+  }
+  .doc p{
+    font-size:15px;
+    line-height:1.72;
+    color:var(--ink);
+    margin:0 0 12px;
+  }
+  .doc ul{
+    margin:0 0 14px;
+    padding-left:0;
+    list-style:none;
+  }
+  .doc ul li{
+    font-size:14.5px;
+    line-height:1.6;
+    padding:7px 0 7px 20px;
+    border-bottom:1px solid var(--line);
+    position:relative;
+    color:var(--ink-soft);
+  }
+  .doc ul li::before{
+    content:"—";
+    position:absolute;
+    left:0;
+    color:var(--doc-color, var(--stamp));
+    font-weight:700;
+  }
+  .doc ul li:last-child{ border-bottom:none; }
+
+  .doc-foot{
+    margin-top:34px;
+    padding-top:18px;
+    border-top:1.5px solid var(--ink);
+    font-size:13px;
+    color:var(--ink-soft);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  /* ---------- lang visibility ---------- */
+  [data-lang="en"]{ display:none; }
+  html[data-active-lang="en"] [data-lang="en"]{ display:block; }
+  html[data-active-lang="en"] [data-lang="ne"]{ display:none; }
+  html[data-active-lang="en"] .doc-head h2 [data-lang="ne"],
+  html[data-active-lang="en"] .tab .ne{ display:none; }
+  html[data-active-lang="en"] .tab .en{ display:block; font-size:13.5px; font-weight:600; opacity:1; }
+  html[data-active-lang="ne"] .doc-head h2 [data-lang="en"]{ display:none; }
+
+  /* ---------- Footer ---------- */
+  footer.site{
+    max-width:1080px;
+    margin:0 auto;
+    padding:30px 24px 60px;
+    border-top:1.5px solid var(--ink);
+    font-size:13px;
+    color:var(--ink-soft);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  footer.site a{ color:var(--ink); font-weight:600; text-decoration:none; }
+  footer.site a:hover{ text-decoration:underline; }
+
+  @media print{
+    nav.index, .top-actions, .seal{ display:none !important; }
+    .doc{ display:block !important; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <filter id="inkRough">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/>
+  </filter>
+</svg>
+
+<header class="top">
+  <p class="eyebrow" data-lang="ne">कानूनी तथा गोपनीयता कागजात</p>
+  <p class="eyebrow" data-lang="en">Legal &amp; Privacy Documents</p>
+  <div class="top-row">
+    <div class="title-block">
+      <h1>SSMS <span style="font-weight:500;">— Sanyam</span></h1>
+      <p class="sub" data-lang="ne">गोपनीयता नीति · सेवाका सर्तहरू · बाल सुरक्षा नीति</p>
+      <p class="sub" data-lang="en">Privacy Policy · Terms of Service · Child Protection Policy</p>
+    </div>
+    <div class="top-actions">
+      <a class="back-link" href="./index.html" data-lang="ne">← एप डाउनलोड</a>
+      <a class="back-link" href="./index.html" data-lang="en">← Download App</a>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button id="btn-ne" onclick="setLang('ne')">ने</button>
+        <button id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </div>
+
+  <svg class="seal" viewBox="0 0 120 120" aria-hidden="true">
+    <circle cx="60" cy="60" r="54" fill="none" stroke="#8C3227" stroke-width="2.4"/>
+    <circle cx="60" cy="60" r="46" fill="none" stroke="#8C3227" stroke-width="1"/>
+    <path id="sealArcTop" d="M 14,60 A 46,46 0 1,1 106,60" fill="none"/>
+    <text font-family="Noto Sans" font-size="7.6" font-weight="700" fill="#8C3227" letter-spacing="1.6">
+      <textPath href="#sealArcTop" startOffset="50%" text-anchor="middle">SCIENCE VISION EXHIBITION &amp; PLANETARIUM</textPath>
+    </text>
+    <text x="60" y="57" text-anchor="middle" font-family="Noto Serif" font-weight="700" font-size="19" fill="#8C3227">SSMS</text>
+    <text x="60" y="74" text-anchor="middle" font-family="Noto Sans" font-weight="600" font-size="8" fill="#8C3227" letter-spacing="1.2">VERIFIED · NEPAL</text>
+  </svg>
+</header>
+
+<div class="wrap">
+  <nav class="index" id="tabNav" aria-label="Legal documents"></nav>
+  <main id="docHost"></main>
+</div>
+
+<footer class="site">
+  <div>
+    <span data-lang="ne">© २०२६ साइन्स भिजन एक्जिभिसन एन्ड प्लानेटेरीयम, नेपाल</span>
+    <span data-lang="en">© 2026 Science Vision Exhibition and Planetarium, Nepal</span>
+  </div>
+  <div>
+    <a href="mailto:ddipendra775@gmail.com">ddipendra775@gmail.com</a> · <a href="tel:+9779762966656">+977-9762966656</a>
+  </div>
+</footer>
+
+<script>
+// ---------------------------------------------------------------
+// Content — copied verbatim from the app's Legal & Privacy module
+// (LegalPrivacyScreens.kt). Edit here if the in-app text changes.
+// ---------------------------------------------------------------
+const DOCS = [
+{
+  id:'privacy', color:'#8C3227',
+  titleNe:'गोपनीयता नीति', titleEn:'Privacy Policy',
+  subNe:'तपाईंको र तपाईंको विद्यार्थीको डाटा कसरी सुरक्षित राखिन्छ', subEn:'How your and your student\u2019s data is protected',
+  bodyEn:`Effective Date: 25 July 2026
+App: SSMS – Smart Student Monitoring System ("Sanyam", "the App", "we", "us")
+Operator: Science Vision Exhibition and Planetarium, Nepal
+
+1.1 INTRODUCTION
+SSMS is a school-parent-teacher collaboration platform built to help schools, parents, and teachers work together to reduce excessive mobile phone use among students and support their academic and behavioral development. This Privacy Policy explains what limited information the App collects, why, and how it is protected.
+
+1.2 INFORMATION WE COLLECT
+We follow a minimal data collection principle. We only collect what is strictly necessary for the App to function.
+
+• Student full name, class/section, roll number — collected from the School (Required)
+• Weekly behavior/discipline notes, eating & learning remarks — collected from the Teacher (Required, for reporting)
+• Parent name — collected from the Parent (Optional)
+• Parent phone number — collected from the Parent (Optional)
+• Teacher / Parent / Student email — Not collected
+• Login credentials (school-issued virtual account / invite code + password) — School / App (Required)
+• In-app messages between school and parent — Parent, Teacher, School (Required, to enable communication)
+• Exam results and academic records — School (Required, for academic module)
+• Payment reference (subscription fee via eSewa/Khalti) — School (Required for billing only; card/bank details are handled entirely by eSewa/Khalti, never stored by us)
+
+We do not collect student email, parent email, teacher email, GPS/location, camera roll, contacts, or call/SMS logs. We do not run background phone-usage tracking, screen recording, or app-blocking on the student's personal device — SSMS is a reporting and communication tool, not spyware.
+
+1.3 HOW WE USE INFORMATION
+• To create and manage school, teacher, parent, and student accounts through role-based access.
+• To share weekly academic and behavioral reports between teachers and parents.
+• To send school news, notices, and exam results.
+• To process school subscription payments through licensed Nepali payment gateways (eSewa, Khalti).
+• To maintain basic security/audit logs (login timestamps, role) to prevent misuse.
+
+1.4 DATA WE DO NOT SELL OR SHARE
+We never sell, rent, or share student, parent, or teacher data with advertisers or third parties for marketing purposes. Data is used solely to operate the App's school-reporting features.
+
+1.5 ROLE-BASED ACCESS
+• School/Principal: can view data for their own school only.
+• Teacher: can view and edit records only for classes assigned to them.
+• Parent: can view records only for their own child.
+• No cross-school or cross-family data access is possible.
+
+1.6 DATA STORAGE & SECURITY
+Data is stored on secured cloud infrastructure (Supabase) with encrypted transport (HTTPS). Access is restricted by login credentials issued by the school. We take reasonable technical and organizational measures to protect data, but no system is 100% secure, and we cannot guarantee absolute security.
+
+1.7 DATA RETENTION
+Student records are retained for as long as the student is enrolled and the school's subscription is active, plus a reasonable period afterward for academic record-keeping, unless the school requests earlier deletion.
+
+1.8 CHILDREN'S PRIVACY
+SSMS is designed to be used by schools, teachers, and parents on behalf of students who are minors. Student accounts are created and managed by the school — students do not self-register, and no student email or personal contact detail is required. See our Child Protection Policy tab for details.
+
+1.9 YOUR RIGHTS
+Parents and schools may request access to, correction of, or deletion of their child's/school's data by contacting us. Schools, as the primary account holder, may request full data export or deletion when they discontinue use of the App.
+
+1.10 CHANGES TO THIS POLICY
+We may update this Privacy Policy from time to time. Material changes will be notified inside the App and via the "Legal & Privacy" section, along with the updated effective date.
+
+1.11 CONTACT
+Questions about this policy: ddipendra775@gmail.com · +977-9762966656 · Nepal`,
+  bodyNe:`प्रभावकारी मिति: 25 July 2026
+एप: SSMS – स्मार्ट स्टुडेन्ट मोनिटरिङ सिस्टम ("सन्यम", "एप", "हामी")
+सञ्चालक: साइन्स भिजन एक्जिभिसन एन्ड प्लानेटेरीयम, नेपाल
+
+१.१ परिचय
+SSMS विद्यार्थीको मोबाइल फोनको अत्यधिक प्रयोग घटाउन र तिनीहरूको शैक्षिक तथा व्यवहारिक विकासमा सहयोग गर्न विद्यालय, अभिभावक र शिक्षकबीचको सहकार्य प्लेटफर्म हो। यो नीतिले एपले कस्तो सीमित जानकारी सङ्कलन गर्छ, किन गर्छ, र त्यसलाई कसरी सुरक्षित राखिन्छ भन्ने कुरा स्पष्ट पार्छ।
+
+१.२ हामीले सङ्कलन गर्ने जानकारी
+हामी न्यूनतम डाटा सङ्कलन सिद्धान्त पालना गर्छौं। एप चलाउन बिल्कुल आवश्यक पर्ने जानकारी मात्र सङ्कलन गरिन्छ।
+
+• विद्यार्थीको पूरा नाम, कक्षा/सेक्सन, रोल नम्बर — विद्यालयबाट (आवश्यक)
+• साप्ताहिक व्यवहार/अनुशासन टिप्पणी, खानपान र सिकाइ सम्बन्धी रिमार्क — शिक्षकबाट (आवश्यक, रिपोर्टका लागि)
+• अभिभावकको नाम — अभिभावकबाट (ऐच्छिक)
+• अभिभावकको फोन नम्बर — अभिभावकबाट (ऐच्छिक)
+• शिक्षक/अभिभावक/विद्यार्थीको इमेल — सङ्कलन गरिँदैन
+• लगइन विवरण (विद्यालयले जारी गरेको भर्चुअल खाता/इन्भाइट कोड + पासवर्ड) — विद्यालय/एप (आवश्यक)
+• विद्यालय र अभिभावकबीचको इन-एप म्यासेज — अभिभावक, शिक्षक, विद्यालय (आवश्यक, सञ्चार सुविधाका लागि)
+• परीक्षाको नतिजा र शैक्षिक रेकर्ड — विद्यालय (आवश्यक, शैक्षिक मोड्युलका लागि)
+• भुक्तानी सन्दर्भ (eSewa/Khalti मार्फत सदस्यता शुल्क) — विद्यालय (बिलिङका लागि मात्र; कार्ड/बैंक विवरण पूर्णतया eSewa/Khalti ले नै व्यवस्थापन गर्छ, हामीले कहिल्यै भण्डारण गर्दैनौं)
+
+हामी विद्यार्थी, अभिभावक वा शिक्षकको इमेल, GPS/लोकेसन, फोनको ग्यालरी, कन्ट्याक्ट, वा कल/SMS लग सङ्कलन गर्दैनौं। हामी विद्यार्थीको व्यक्तिगत फोनमा ब्याकग्राउन्ड ट्र्याकिङ, स्क्रिन रेकर्डिङ, वा एप-ब्लकिङ जस्ता काम गर्दैनौं — SSMS एउटा रिपोर्टिङ र सञ्चार उपकरण हो, जासुसी सफ्टवेयर होइन।
+
+१.३ जानकारीको प्रयोग
+• विद्यालय, शिक्षक, अभिभावक र विद्यार्थीको खाता भूमिकाअनुसार पहुँच मार्फत व्यवस्थापन गर्न।
+• शिक्षक र अभिभावकबीच साप्ताहिक शैक्षिक तथा व्यवहारिक रिपोर्ट साझा गर्न।
+• विद्यालयको समाचार, सूचना, र परीक्षाको नतिजा पठाउन।
+• लाइसेन्सप्राप्त नेपाली भुक्तानी गेटवे (eSewa, Khalti) मार्फत विद्यालयको सदस्यता शुल्क प्रशोधन गर्न।
+• दुरुपयोग रोक्न आधारभूत सुरक्षा/अडिट लग (लगइन समय, भूमिका) राख्न।
+
+१.४ डाटा बिक्री वा साझेदारी गर्दैनौं
+हामी विद्यार्थी, अभिभावक वा शिक्षकको डाटा कहिल्यै विज्ञापनदाता वा तेस्रो पक्षलाई बेच्दैनौं, भाडामा दिँदैनौं, वा मार्केटिङका लागि साझा गर्दैनौं। डाटा एपको विद्यालय-रिपोर्टिङ सुविधा सञ्चालन गर्नमा मात्र प्रयोग गरिन्छ।
+
+१.५ भूमिकाअनुसार पहुँच
+• विद्यालय/प्रधानाध्यापक: आफ्नो विद्यालयको डाटा मात्र हेर्न सक्नुहुन्छ।
+• शिक्षक: आफूलाई तोकिएको कक्षाको रेकर्ड मात्र हेर्न/सम्पादन गर्न सक्नुहुन्छ।
+• अभिभावक: आफ्नो छोराछोरीको रेकर्ड मात्र हेर्न सक्नुहुन्छ।
+• अन्तर-विद्यालय वा अन्तर-परिवार डाटा पहुँच सम्भव छैन।
+
+१.६ डाटा भण्डारण र सुरक्षा
+डाटा सुरक्षित क्लाउड इन्फ्रास्ट्रक्चर (Supabase) मा HTTPS इन्क्रिप्टेड ट्रान्सपोर्टसहित भण्डारण गरिन्छ। पहुँच विद्यालयले जारी गरेको लगइन विवरणद्वारा सीमित छ। हामी डाटा सुरक्षित राख्न उचित प्राविधिक र संगठनात्मक उपायहरू अपनाउँछौं, तर कुनै पनि प्रणाली १००% सुरक्षित हुँदैन, र हामी पूर्ण सुरक्षाको ग्यारेन्टी दिन सक्दैनौं।
+
+१.७ डाटा राख्ने अवधि
+विद्यार्थी भर्ना भएसम्म र विद्यालयको सदस्यता सक्रिय रहेसम्म, अनि शैक्षिक रेकर्डका लागि पछि पनि उचित अवधिसम्म रेकर्ड राखिन्छ, जबसम्म विद्यालयले पहिले नै हटाउन अनुरोध गर्दैन।
+
+१.८ बालबालिकाको गोपनीयता
+SSMS विद्यालय, शिक्षक, र अभिभावकले नाबालक विद्यार्थीको तर्फबाट प्रयोग गर्ने गरी डिजाइन गरिएको हो। विद्यार्थीको खाता विद्यालयले नै बनाउँछ र व्यवस्थापन गर्छ — विद्यार्थीले आफैं दर्ता गर्दैन, र कुनै पनि इमेल वा व्यक्तिगत सम्पर्क विवरण आवश्यक पर्दैन। विस्तृत जानकारीका लागि बाल सुरक्षा नीति ट्याब हेर्नुहोस्।
+
+१.९ तपाईंको अधिकार
+अभिभावक र विद्यालयले आफ्नो बच्चा/विद्यालयको डाटा हेर्न, सच्याउन, वा हटाउन हामीलाई सम्पर्क गरी अनुरोध गर्न सक्नुहुन्छ। मुख्य खाताधनी भएकाले, विद्यालयले एप प्रयोग बन्द गर्दा पूर्ण डाटा एक्सपोर्ट वा हटाउन अनुरोध गर्न सक्छ।
+
+१.१० नीतिमा परिवर्तन
+हामी यो गोपनीयता नीति समय-समयमा अद्यावधिक गर्न सक्छौं। महत्त्वपूर्ण परिवर्तनहरू एप भित्रको "Legal & Privacy" खण्डमा अद्यावधिक प्रभावकारी मितिसहित सूचित गरिनेछ।
+
+१.११ सम्पर्क
+यस नीतिसम्बन्धी प्रश्नका लागि: ddipendra775@gmail.com · +977-9762966656 · नेपाल`
+},
+{
+  id:'terms', color:'#33456B',
+  titleNe:'सेवाका सर्तहरू', titleEn:'Terms of Service',
+  subNe:'SSMS प्रयोग गर्दा लागू हुने सर्त र जिम्मेवारी', subEn:'The rules and responsibilities that apply when using SSMS',
+  bodyEn:`Effective Date: 25 July 2026
+
+3.1 ACCEPTANCE OF TERMS
+By accessing or using SSMS ("the App"), your school, its staff, parents, and authorized users agree to these Terms of Service.
+
+3.2 WHO CAN USE SSMS
+• Schools subscribe to the App and create the master account.
+• Teachers and Parents receive access via school-issued invite codes / virtual accounts — they do not self-register with personal email.
+• Students do not directly operate accounts; all student data is entered and managed by the school on their behalf.
+
+3.3 SCHOOL RESPONSIBILITIES
+• Accurately entering and maintaining student, teacher, and parent records.
+• Obtaining any consent required under applicable law before entering student data (e.g., informing parents/guardians that the school uses SSMS).
+• Safeguarding login credentials issued to its staff and parents.
+• Promptly notifying us of any suspected unauthorized access.
+
+3.4 SUBSCRIPTION & PAYMENTS
+• SSMS is offered to schools on a subscription basis.
+• Payments are processed via eSewa and Khalti, licensed Nepali payment service providers. We do not store your card, bank, or wallet credentials.
+• Subscription fees, renewal terms, and refund conditions are as displayed at the time of purchase inside the App.
+• If a subscription lapses, the school's access may be suspended until renewed; data is retained for a reasonable grace period before deletion.
+
+3.5 ACCEPTABLE USE
+Users agree not to:
+• Enter false, defamatory, or harmful information about any student, parent, or teacher.
+• Attempt to access data outside their assigned role.
+• Use the messaging feature to harass, bully, or threaten any user.
+• Reverse-engineer, resell, or misuse the App or its data.
+
+3.6 INTELLECTUAL PROPERTY
+The App, its design, logo, and underlying software are the property of Science Vision Exhibition and Planetarium and may not be copied or redistributed without permission.
+
+3.7 DISCLAIMER OF WARRANTY
+The App is provided "as is." While we strive for reliability, we do not guarantee uninterrupted or error-free operation. See our full Disclaimer tab.
+
+3.8 LIMITATION OF LIABILITY
+To the maximum extent permitted by law, Science Vision Exhibition and Planetarium is not liable for indirect, incidental, or consequential damages arising from the use of the App, including decisions made by schools or parents based on in-app reports.
+
+3.9 TERMINATION
+We may suspend or terminate access for accounts that violate these Terms or applicable law. Schools may terminate their subscription at any time as per the cancellation process shown in-app.
+
+3.10 GOVERNING LAW
+These Terms are governed by the laws of Nepal. Disputes will be subject to the jurisdiction of the courts of Nepal, unless otherwise required by law.
+
+3.11 CHANGES TO TERMS
+We may revise these Terms; continued use of the App after changes constitutes acceptance of the revised Terms.
+
+3.12 CONTACT
+ddipendra775@gmail.com · +977-9762966656 · Nepal`,
+  bodyNe:`प्रभावकारी मिति: 25 July 2026
+
+४.१ सर्तहरूको स्वीकृति
+SSMS ("एप") प्रयोग गरेर, तपाईंको विद्यालय, यसका कर्मचारी, अभिभावक, र अधिकृत प्रयोगकर्ताहरूले यी सेवाका सर्तहरूमा सहमति जनाउँछन्।
+
+४.२ SSMS को प्रयोग कसले गर्न सक्छ
+• विद्यालयले एपको सदस्यता लिई मास्टर खाता बनाउँछ।
+• शिक्षक र अभिभावकले विद्यालयले जारी गरेको इन्भाइट कोड/भर्चुअल खाता मार्फत पहुँच पाउँछन् — व्यक्तिगत इमेलद्वारा आफैं दर्ता गर्नुपर्दैन।
+• विद्यार्थीले आफैं खाता सञ्चालन गर्दैनन्; सबै विद्यार्थी डाटा विद्यालयले तिनीहरूको तर्फबाट प्रविष्ट र व्यवस्थापन गर्छ।
+
+४.३ विद्यालयको जिम्मेवारी
+• विद्यार्थी, शिक्षक, र अभिभावकको रेकर्ड सही तरिकाले प्रविष्ट र अद्यावधिक गर्ने।
+• विद्यार्थी डाटा प्रविष्ट गर्नुअघि लागू कानूनअनुसार आवश्यक सहमति लिने (जस्तै, विद्यालयले SSMS प्रयोग गर्छ भनी अभिभावक/संरक्षकलाई जानकारी दिने)।
+• आफ्ना कर्मचारी र अभिभावकलाई जारी गरिएको लगइन विवरण सुरक्षित राख्ने।
+• कुनै अनधिकृत पहुँचको शंका भएमा तुरुन्त हामीलाई जानकारी गराउने।
+
+४.४ सदस्यता र भुक्तानी
+• SSMS विद्यालयलाई सदस्यता आधारमा उपलब्ध गराइन्छ।
+• भुक्तानी eSewa र Khalti, लाइसेन्सप्राप्त नेपाली भुक्तानी सेवा प्रदायकहरू मार्फत प्रशोधन गरिन्छ। हामी तपाईंको कार्ड, बैंक, वा वालेट विवरण भण्डारण गर्दैनौं।
+• सदस्यता शुल्क, नवीकरण सर्त, र फिर्ता शर्तहरू खरिद गर्ने समयमा एप भित्र देखाइए अनुसार हुनेछन्।
+• सदस्यता समाप्त भएमा, नवीकरण नभएसम्म विद्यालयको पहुँच निलम्बन हुन सक्छ; हटाउनुअघि उचित समयसम्म डाटा राखिन्छ।
+
+४.५ स्वीकार्य प्रयोग
+प्रयोगकर्ताहरूले निम्न नगर्न सहमत हुन्छन्:
+• कुनै विद्यार्थी, अभिभावक, वा शिक्षकबारे झुटो, बदनामीजनक, वा हानिकारक जानकारी प्रविष्ट गर्ने।
+• आफूलाई तोकिएको भूमिकाभन्दा बाहिरको डाटामा पहुँच गर्ने प्रयास गर्ने।
+• म्यासेजिङ सुविधा प्रयोग गरी कुनै प्रयोगकर्तालाई दुर्व्यवहार, धम्की, वा तर्साउने।
+• एप वा यसको डाटा रिभर्स-इन्जिनियर, पुनर्बिक्री, वा दुरुपयोग गर्ने।
+
+४.६ बौद्धिक सम्पत्ति
+एप, यसको डिजाइन, लोगो, र अन्तर्निहित सफ्टवेयर साइन्स भिजन एक्जिभिसन एन्ड प्लानेटेरीयम को सम्पत्ति हो र अनुमतिबिना प्रतिलिपि वा पुनर्वितरण गर्न पाइँदैन।
+
+४.७ ग्यारेन्टीको अस्वीकरण
+एप "जस्तो छ त्यस्तै" उपलब्ध गराइन्छ। हामी विश्वसनीयताको प्रयास गर्छौं, तर निर्बाध वा त्रुटिरहित सञ्चालनको ग्यारेन्टी दिँदैनौं। हाम्रो पूर्ण Disclaimer ट्याब हेर्नुहोस्।
+
+४.८ दायित्वको सीमा
+कानूनले अनुमति दिएको अधिकतम हदसम्म, साइन्स भिजन एक्जिभिसन एन्ड प्लानेटेरीयम एप प्रयोगबाट उत्पन्न अप्रत्यक्ष, आकस्मिक, वा परिणामस्वरूप हुने क्षतिका लागि जिम्मेवार हुनेछैन, जसमा एप भित्रको रिपोर्टमा आधारित विद्यालय वा अभिभावकको निर्णय पनि समावेश छ।
+
+४.९ खाता समाप्ति
+यी सर्त वा लागू कानून उल्लंघन गर्ने खाताको पहुँच हामी निलम्बन वा समाप्त गर्न सक्छौं। विद्यालयले एप भित्र देखाइएको रद्द प्रक्रियाअनुसार जुनसुकै बेला आफ्नो सदस्यता रद्द गर्न सक्छ।
+
+४.१० लागू हुने कानून
+यी सर्तहरू नेपालको कानूनद्वारा शासित हुन्छन्। विवाद, कानूनले अन्यथा नभनेसम्म, नेपालका अदालतको अधिकार क्षेत्रमा पर्नेछ।
+
+४.११ सर्तमा परिवर्तन
+हामी यी सर्तहरू संशोधन गर्न सक्छौं; परिवर्तनपछि एपको निरन्तर प्रयोगले संशोधित सर्तको स्वीकृति जनाउँछ।
+
+४.१२ सम्पर्क
+ddipendra775@gmail.com · +977-9762966656 · नेपाल`
+},
+{
+  id:'data-safety', color:'#3B5D42',
+  titleNe:'डाटा सुरक्षा नीति', titleEn:'Data Safety Policy',
+  subNe:'Google Play Data Safety फारमसँग मिल्दो सारांश', subEn:'Maps directly to the Google Play Data Safety form',
+  bodyEn:`Purpose: This section maps directly to what we declare in the Google Play Console "Data Safety" form.
+
+5.1 DATA COLLECTED
+• Personal info — Name (student/parent, optional) — Yes
+• Personal info — Phone number (parent, optional) — Yes
+• Personal info — Email address — No
+• Financial info — Payment info — Processed by eSewa/Khalti only, never stored by us
+• App activity — In-app messages, academic records — Yes
+• Location — Not collected
+• Photos/Media — Not collected
+• Device or other IDs — Not collected
+
+5.2 SECURITY PRACTICES
+• Data is encrypted in transit (HTTPS/TLS).
+• Access is restricted through role-based, credential-gated login.
+• Users/schools can request data deletion.
+• Data collection follows a data minimization principle — we only collect what's needed to run the reporting and communication features.
+
+5.3 NO ADVERTISING USE
+SSMS does not use any student, parent, or teacher data for advertising, profiling, or third-party marketing purposes. There are no ad SDKs collecting personal data in this App.`,
+  bodyNe:`उद्देश्य: यो खण्ड Google Play Console को "Data Safety" फारममा हामीले घोषणा गर्ने कुरासँग सीधै मिल्दो छ।
+
+६.१ सङ्कलन गरिने डाटा
+• व्यक्तिगत जानकारी — नाम (विद्यार्थी/अभिभावक, ऐच्छिक) — हो
+• व्यक्तिगत जानकारी — फोन नम्बर (अभिभावक, ऐच्छिक) — हो
+• व्यक्तिगत जानकारी — इमेल ठेगाना — होइन
+• वित्तीय जानकारी — भुक्तानी विवरण — eSewa/Khalti ले मात्र प्रशोधन, हामी कहिल्यै भण्डारण गर्दैनौं
+• एप गतिविधि — इन-एप म्यासेज, शैक्षिक रेकर्ड — हो
+• लोकेसन — सङ्कलन गरिँदैन
+• फोटो/मिडिया — सङ्कलन गरिँदैन
+• डिभाइस वा अन्य ID — सङ्कलन गरिँदैन
+
+६.२ सुरक्षा अभ्यास
+• डाटा ट्रान्जिटमा इन्क्रिप्ट गरिन्छ (HTTPS/TLS)।
+• पहुँच भूमिकाअनुसार, क्रेडेन्सियल-गेटेड लगइनद्वारा सीमित छ।
+• प्रयोगकर्ता/विद्यालयले डाटा हटाउन अनुरोध गर्न सक्छन्।
+• डाटा सङ्कलन न्यूनतम डाटा सिद्धान्त अनुसार हुन्छ — रिपोर्टिङ र सञ्चार सुविधा चलाउन आवश्यक जति मात्र सङ्कलन गरिन्छ।
+
+६.३ विज्ञापनमा प्रयोग हुँदैन
+SSMS ले विद्यार्थी, अभिभावक, वा शिक्षकको कुनै पनि डाटा विज्ञापन, प्रोफाइलिङ, वा तेस्रो-पक्ष मार्केटिङका लागि प्रयोग गर्दैन। यो एपमा व्यक्तिगत डाटा सङ्कलन गर्ने कुनै ad SDK छैन।`
+},
+{
+  id:'child-protection', color:'#9C7A2E',
+  titleNe:'बाल सुरक्षा नीति', titleEn:'Child Protection Policy',
+  subNe:'विद्यार्थीको हित केन्द्रमा राखेर बनाइएको नीति', subEn:'Designed with the student\u2019s well-being at the centre',
+  bodyEn:`Effective Date: 25 July 2026
+
+7.1 OUR COMMITMENT
+SSMS exists specifically to support the well-being of students. We take child safety seriously and have designed the App around the principle that students are protected subjects, not direct account holders.
+
+7.2 HOW STUDENT ACCOUNTS WORK
+• Student profiles are created and managed only by the school, using a school-issued virtual account/login.
+• Students do not provide an email address, phone number, or any independent contact detail.
+• Students cannot self-register or create an account outside the school's control.
+
+7.3 CONSENT
+Schools using SSMS are expected to inform parents/guardians that the school records student attendance, behavior, and academic data through SSMS, in line with the school's own enrollment/consent process. We recommend schools include SSMS usage in their admission agreement or send a one-time notice to parents.
+
+7.4 NO DIRECT COMMUNICATION WITH STUDENTS
+SSMS is a school ↔ teacher ↔ parent communication tool. Students are not required to log in personally, and the messaging feature is designed for adult-to-adult (teacher-parent) communication about the student — not private messaging with the child.
+
+7.5 CONTENT STANDARDS
+All content entered about a student (remarks, behavior notes) must be professional, factual, and non-defamatory. Teachers and schools are responsible for ensuring entries do not contain abusive language.
+
+7.6 REPORTING CONCERNS
+If a parent or school believes a student's data has been mishandled, or if there is any concern about misuse of the App involving a child, please contact us immediately at ddipendra775@gmail.com — such reports are treated with priority.
+
+7.7 COMPLIANCE
+This policy is designed with reference to Nepal's Act Relating to Children, 2075 (2018), the Individual Privacy Act, 2075 (2018), and Google Play's Families Policy requirements for apps used in a school context.`,
+  bodyNe:`प्रभावकारी मिति: 25 July 2026
+
+८.१ हाम्रो प्रतिबद्धता
+SSMS विशेष गरी विद्यार्थीको हितको लागि बनाइएको हो। हामी बाल सुरक्षालाई गम्भीरतापूर्वक लिन्छौं र एपलाई यस सिद्धान्तमा डिजाइन गरेका छौं कि विद्यार्थी संरक्षित विषय हुन्, प्रत्यक्ष खाताधनी होइनन्।
+
+८.२ विद्यार्थी खाता कसरी काम गर्छ
+• विद्यार्थी प्रोफाइल विद्यालयले मात्र विद्यालय-जारी भर्चुअल खाता/लगइन प्रयोग गरी बनाउँछ र व्यवस्थापन गर्छ।
+• विद्यार्थीले इमेल ठेगाना, फोन नम्बर, वा कुनै स्वतन्त्र सम्पर्क विवरण दिनु पर्दैन।
+• विद्यार्थीले विद्यालयको नियन्त्रणभन्दा बाहिर आफैं दर्ता वा खाता बनाउन सक्दैनन्।
+
+८.३ सहमति
+SSMS प्रयोग गर्ने विद्यालयले आफ्नो भर्ना/सहमति प्रक्रियाअनुसार, विद्यालयले SSMS मार्फत विद्यार्थीको उपस्थिति, व्यवहार, र शैक्षिक डाटा रेकर्ड गर्छ भनी अभिभावक/संरक्षकलाई जानकारी दिनुपर्छ। हामी विद्यालयलाई भर्ना सम्झौतामा SSMS प्रयोगको उल्लेख गर्न वा अभिभावकलाई एकपटक सूचना पठाउन सिफारिस गर्छौं।
+
+८.४ विद्यार्थीसँग प्रत्यक्ष सञ्चार छैन
+SSMS एउटा विद्यालय ↔ शिक्षक ↔ अभिभावक सञ्चार उपकरण हो। विद्यार्थीले व्यक्तिगत रूपमा लगइन गर्नुपर्दैन, र म्यासेजिङ सुविधा वयस्क-देखि-वयस्क (शिक्षक-अभिभावक) बीच विद्यार्थीबारे कुराकानीका लागि डिजाइन गरिएको हो — बच्चासँगको निजी म्यासेजिङका लागि होइन।
+
+८.५ सामग्री मापदण्ड
+विद्यार्थीबारे प्रविष्ट गरिने सबै सामग्री (रिमार्क, व्यवहार टिप्पणी) व्यावसायिक, तथ्यमा आधारित, र बदनामीरहित हुनुपर्छ। प्रविष्टिहरूमा अपमानजनक भाषा नहोस् भन्ने सुनिश्चित गर्ने जिम्मेवारी शिक्षक र विद्यालयको हो।
+
+८.६ चिन्ता रिपोर्ट गर्ने
+यदि कुनै अभिभावक वा विद्यालयलाई विद्यार्थीको डाटा गलत तरिकाले व्यवस्थापन भएको लाग्छ, वा बच्चासम्बन्धी एपको दुरुपयोगको कुनै चिन्ता छ भने, कृपया तुरुन्त ddipendra775@gmail.com मा सम्पर्क गर्नुहोस् — यस्ता रिपोर्टलाई प्राथमिकतामा राखिन्छ।
+
+८.७ अनुपालन
+यो नीति नेपालको बालबालिकासम्बन्धी ऐन, २०७५, व्यक्तिगत गोपनीयता ऐन, २०७५, र विद्यालय सन्दर्भमा प्रयोग हुने एपका लागि Google Play को Families Policy आवश्यकतालाई ध्यानमा राखी तयार गरिएको हो।`
+},
+{
+  id:'disclaimer', color:'#5A5F63',
+  titleNe:'अस्वीकरण', titleEn:'Disclaimer',
+  subNe:'एपको प्रयोगसम्बन्धी सीमाहरू', subEn:'The limits of what the App is and isn\u2019t',
+  bodyEn:`SSMS is a supportive reporting and communication tool for schools, teachers, and parents. It is not a substitute for direct parental supervision, professional counseling, or medical/psychological advice.
+
+Behavioral or discipline scores shown in the App reflect teacher observations and are meant as guidance only, not clinical assessments.
+
+Science Vision Exhibition and Planetarium is not responsible for decisions made solely on the basis of in-app reports, nor for inaccuracies in data entered by schools or teachers.
+
+Payment processing is handled entirely by third-party providers (eSewa, Khalti); we are not responsible for outages or issues on their platforms.`,
+  bodyNe:`SSMS विद्यालय, शिक्षक, र अभिभावकका लागि सहायक रिपोर्टिङ र सञ्चार उपकरण हो। यो प्रत्यक्ष अभिभावकीय निगरानी, व्यावसायिक परामर्श, वा चिकित्सा/मनोवैज्ञानिक सल्लाहको विकल्प होइन।
+
+एपमा देखाइने व्यवहार वा अनुशासन स्कोर शिक्षकको अवलोकनमा आधारित हुन्छ र यो मार्गदर्शनका लागि मात्र हो, क्लिनिकल मूल्याङ्कन होइन।
+
+साइन्स भिजन एक्जिभिसन एन्ड प्लानेटेरीयम एप भित्रको रिपोर्टमा मात्र आधारित भई लिइएको निर्णय, वा विद्यालय/शिक्षकले प्रविष्ट गरेको डाटाको त्रुटिका लागि जिम्मेवार हुनेछैन।
+
+भुक्तानी प्रशोधन पूर्णतया तेस्रो-पक्ष प्रदायक (eSewa, Khalti) ले गर्छ; तिनीहरूको प्लेटफर्ममा हुने अवरोध वा समस्याका लागि हामी जिम्मेवार हुनेछैनौं।`
+},
+{
+  id:'contact', color:'#20293A',
+  titleNe:'हामीलाई सम्पर्क गर्नुहोस्', titleEn:'Contact Us',
+  subNe:'प्रश्न, गुनासो, वा अनुरोधको लागि', subEn:'For questions, requests, or concerns',
+  bodyEn:`• Support Email: ddipendra775@gmail.com
+• Phone / WhatsApp: +977-9762966656
+• Address: Nepal
+• Support Hours: Sunday–Friday, 10 AM – 5 PM NPT`,
+  bodyNe:`• सम्पर्क इमेल: ddipendra775@gmail.com
+• फोन / WhatsApp: +977-9762966656
+• ठेगाना: नेपाल
+• सम्पर्क समय: आइतबार–शुक्रबार, बिहान १० – साँझ ५ बजे`
+}
+];
+
+// ---------------------------------------------------------------
+// Render
+// ---------------------------------------------------------------
+function renderBody(text){
+  const blocks = text.trim().split(/\n\s*\n/);
+  let html = '';
+  blocks.forEach((block, i) => {
+    const lines = block.split('\n').map(l=>l.trim()).filter(Boolean);
+    if (i === 0 && /^(Effective Date|प्रभावकारी मिति|Purpose:|उद्देश्य:)/.test(lines[0])) {
+      html += '<div class="meta-strip">' + lines.map(l=>`<span>${escapeHtml(l)}</span>`).join('') + '</div>';
+      return;
+    }
+    const headerMatch = lines[0].match(/^([0-9\u0966-\u096F]+\.[0-9\u0966-\u096F]+)\s+(.+)$/);
+    if (headerMatch) {
+      html += `<h3><span class="idx">${headerMatch[1]}</span>${escapeHtml(headerMatch[2])}</h3>`;
+      lines.shift();
+      html += renderLines(lines);
+    } else {
+      html += renderLines(lines);
+    }
+  });
+  return html;
+}
+function renderLines(lines){
+  let html = '', bulletBuffer = [];
+  const flush = () => {
+    if (bulletBuffer.length){
+      html += '<ul>' + bulletBuffer.map(b=>`<li>${escapeHtml(b)}</li>`).join('') + '</ul>';
+      bulletBuffer = [];
+    }
+  };
+  lines.forEach(line => {
+    if (line.startsWith('•')) {
+      bulletBuffer.push(line.replace(/^•\s*/, ''));
+    } else {
+      flush();
+      html += `<p>${escapeHtml(line)}</p>`;
+    }
+  });
+  flush();
+  return html;
+}
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+const tabNav = document.getElementById('tabNav');
+const docHost = document.getElementById('docHost');
+
+DOCS.forEach((doc, idx) => {
+  const tab = document.createElement('button');
+  tab.className = 'tab' + (idx === 0 ? ' active' : '');
+  tab.style.setProperty('--tab-color', doc.color);
+  tab.dataset.id = doc.id;
+  tab.innerHTML = `<span><span class="ne">${doc.titleNe}</span><span class="en">${doc.titleEn}</span></span>`;
+  tab.onclick = () => activate(doc.id);
+  tabNav.appendChild(tab);
+
+  const section = document.createElement('article');
+  section.className = 'doc' + (idx === 0 ? ' active' : '');
+  section.id = 'doc-' + doc.id;
+  section.style.setProperty('--doc-color', doc.color);
+  section.innerHTML = `
+    <div class="doc-head">
+      <h2><span data-lang="ne">${doc.titleNe}</span><span data-lang="en">${doc.titleEn}</span></h2>
+      <span class="stamp-chip" data-lang="ne">प्रमाणित / SSMS</span>
+      <span class="stamp-chip" data-lang="en">Verified / SSMS</span>
+    </div>
+    <p class="doc-sub" data-lang="ne">${doc.subNe}</p>
+    <p class="doc-sub" data-lang="en">${doc.subEn}</p>
+    <div data-lang="ne">${renderBody(doc.bodyNe)}</div>
+    <div data-lang="en">${renderBody(doc.bodyEn)}</div>
+    <div class="doc-foot">
+      <span data-lang="ne">SSMS — साइन्स भिजन एक्जिभिसन एन्ड प्लानेटेरीयम</span>
+      <span data-lang="en">SSMS — Science Vision Exhibition and Planetarium</span>
+      <button onclick="window.print()" style="background:none;border:1px solid var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer;font-family:var(--sans);font-size:12px;">
+        <span data-lang="ne">🖨 प्रिन्ट / PDF</span><span data-lang="en">🖨 Print / Save PDF</span>
+      </button>
+    </div>`;
+  docHost.appendChild(section);
+});
+
+function activate(id){
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.id === id));
+  document.querySelectorAll('.doc').forEach(d => d.classList.toggle('active', d.id === 'doc-' + id));
+  history.replaceState(null, '', '#' + id);
+}
+
+function setLang(lang){
+  document.documentElement.setAttribute('data-active-lang', lang);
+  document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : 'ne');
+  document.getElementById('btn-ne').classList.toggle('active', lang === 'ne');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  try { localStorage.setItem('ssms-legal-lang', lang); } catch(e){}
+}
+
+// initial state: hash-linked doc + saved language
+const startId = (location.hash || '').replace('#','');
+if (DOCS.some(d => d.id === startId)) activate(startId);
+let savedLang = 'ne';
+try { savedLang = localStorage.getItem('ssms-legal-lang') || 'ne'; } catch(e){}
+setLang(savedLang);
+</script>
+</body>
+</html>
