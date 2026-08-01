@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>सदस्यता नवीकरण — SSMS App</title>
+<style>
+  :root { --navy:#152a6e; --navy-dark:#0f1f52; --green:#1f8a5c; --bg:#eef2fb; --line:#dfe3ef; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: linear-gradient(180deg,#f5f7fd,#e3e9fb);
+    color: var(--navy-dark); font-family: -apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif;
+    display: flex; justify-content: center; padding: 40px 16px;
+  }
+  main { width: 100%; max-width: 440px; }
+  .logo { text-align:center; font-weight:800; font-size:1.4rem; color:var(--navy); margin-bottom:4px; }
+  .tag { text-align:center; color:#6b7794; font-size:.85rem; margin-bottom:28px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px; box-shadow:0 8px 24px rgba(21,42,110,.06); margin-bottom:16px; }
+  h1 { font-size:1.05rem; margin:0 0 4px; color:var(--navy); }
+  p.sub { margin:0 0 20px; color:#6b7794; font-size:.85rem; line-height:1.5; }
+  label { display:block; font-size:.78rem; font-weight:700; margin-bottom:6px; color:#3a4468; }
+  input { width:100%; padding:11px 13px; border:1px solid var(--line); border-radius:10px; font-size:.95rem; margin-bottom:16px; background:#f9fafe; }
+  .plans { display:flex; gap:10px; margin-bottom:16px; }
+  .plan { flex:1; border:1.5px solid var(--line); border-radius:12px; padding:12px 8px; text-align:center; cursor:pointer; transition:.15s; }
+  .plan.active { border-color:var(--green); background:#eafbf2; }
+  .plan .amt { font-weight:800; color:var(--green); font-size:1.02rem; margin:2px 0; }
+  .plan .lbl { font-size:.72rem; color:#6b7794; font-weight:700; }
+  .methods { display:flex; gap:8px; margin-bottom:18px; }
+  .m { flex:1; border:1.5px solid var(--line); border-radius:10px; padding:10px 4px; text-align:center; font-weight:700; font-size:.85rem; cursor:pointer; color:#3a4468; }
+  .m.active { border-color:var(--navy); background:#eef1fc; color:var(--navy); }
+  button.pay { width:100%; padding:14px; border:none; border-radius:12px; background:linear-gradient(135deg,var(--navy),var(--navy-dark)); color:#fff; font-size:1rem; font-weight:800; cursor:pointer; }
+  button.pay:disabled { opacity:.55; }
+  .status { text-align:center; font-size:.85rem; font-weight:700; margin-bottom:10px; min-height:1.2em; }
+  .status.err { color:#c0392b; }
+  .status.ok { color:var(--green); }
+  .foot { text-align:center; font-size:.75rem; color:#8894b3; margin-top:18px; }
+  .foot a { color:var(--navy); }
+</style>
+</head>
+<body>
+<main>
+  <div class="logo">🏫 SSMS App</div>
+  <div class="tag">School Management System</div>
+
+  <div class="card">
+    <h1>सदस्यता नवीकरण</h1>
+    <p class="sub">आफ्नो विद्यालयको School Code प्रविष्ट गरेर सदस्यता नवीकरण गर्नुहोस्।</p>
+
+    <label for="code">School Code</label>
+    <input id="code" placeholder="उदाहरण: SCH-10492" autocapitalize="characters" />
+
+    <label>योजना छान्नुहोस्</label>
+    <div class="plans">
+      <div class="plan active" data-amount="5000" id="planMonthly">
+        <div class="lbl">मासिक</div>
+        <div class="amt">रु. ५,०००</div>
+        <div class="lbl">+३० दिन</div>
+      </div>
+      <div class="plan" data-amount="50000" id="planYearly">
+        <div class="lbl">वार्षिक</div>
+        <div class="amt">रु. ५०,०००</div>
+        <div class="lbl">+१ वर्ष</div>
+      </div>
+    </div>
+
+    <label>भुक्तानी विधि</label>
+    <div class="methods">
+      <div class="m active" data-method="esewa" id="mEsewa">eSewa</div>
+      <div class="m" data-method="khalti" id="mKhalti">Khalti</div>
+    </div>
+
+    <button class="pay" id="payBtn">भुक्तानी गर्नुहोस्</button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="foot">समस्या भएमा सम्पर्क गर्नुहोस् · <a href="./index.html">SSMS App होमपेजमा फर्कनुहोस्</a></div>
+</main>
+
+<script>
+  const FUNCTION_URL = "https://icfxffduambqlbivowzs.supabase.co/functions/v1/initiate-payment";
+
+  let amount = 5000;
+  let method = "esewa";
+
+  document.getElementById("planMonthly").onclick = () => selectPlan("planMonthly", 5000);
+  document.getElementById("planYearly").onclick = () => selectPlan("planYearly", 50000);
+  document.getElementById("mEsewa").onclick = () => selectMethod("mEsewa", "esewa");
+  document.getElementById("mKhalti").onclick = () => selectMethod("mKhalti", "khalti");
+
+  function selectPlan(id, amt) {
+    amount = amt;
+    document.querySelectorAll(".plan").forEach(el => el.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+  }
+  function selectMethod(id, m) {
+    method = m;
+    document.querySelectorAll(".m").forEach(el => el.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+  }
+
+  function submitEsewaForm(esewaForm) {
+    const form = document.createElement("form");
+    form.method = esewaForm.method || "POST";
+    form.action = esewaForm.action;
+    for (const [name, value] of Object.entries(esewaForm.fields)) {
+      const input = document.createElement("input");
+      input.type = "hidden"; input.name = name; input.value = value;
+      form.appendChild(input);
+    }
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+  const statusEl = document.getElementById("status");
+  const btn = document.getElementById("payBtn");
+
+  btn.addEventListener("click", async () => {
+    const code = document.getElementById("code").value.trim().toUpperCase();
+    if (!code) {
+      statusEl.textContent = "कृपया School Code प्रविष्ट गर्नुहोस्।";
+      statusEl.className = "status err";
+      return;
+    }
+    btn.disabled = true;
+    statusEl.className = "status";
+    statusEl.textContent = "जाँच गर्दैछ...";
+
+    try {
+      const res = await fetch(FUNCTION_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          school_code: code,
+          amount,
+          method,
+          return_url: window.location.origin + window.location.pathname.replace(/renew\.html$/, "") + "index.html"
+        })
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        statusEl.textContent = data.error === "School not found"
+          ? "यो School Code भेटिएन। कृपया फेरि जाँच्नुहोस्।"
+          : ("त्रुटि: " + (data.error || res.status));
+        statusEl.className = "status err";
+        btn.disabled = false;
+        return;
+      }
+      statusEl.textContent = "सफल! भुक्तानी पेजमा लैजाँदैछ...";
+      statusEl.className = "status ok";
+      if (data.esewa_form) {
+        setTimeout(() => submitEsewaForm(data.esewa_form), 500);
+      } else if (data.checkout_url) {
+        setTimeout(() => { window.location.href = data.checkout_url; }, 500);
+      }
+    } catch (e) {
+      statusEl.textContent = "Network error, फेरि प्रयास गर्नुहोस्।";
+      statusEl.className = "status err";
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
