@@ -29,8 +29,15 @@
   .status { text-align:center; font-size:.85rem; font-weight:700; margin-bottom:10px; min-height:1.2em; }
   .status.err { color:#c0392b; }
   .status.ok { color:#1f8a5c; }
-  .result { display:none; background:#eafbf2; border:1px solid #bdf0d4; border-radius:12px; padding:16px; font-size:.85rem; line-height:1.8; }
-  .result b { color:var(--navy); }
+  .result { display:none; background:#eafbf2; border:1px solid #bdf0d4; border-radius:12px; padding:18px; }
+  .result h2 { margin:0 0 14px; font-size:1rem; color:#166a45; }
+  .role-block { margin-bottom:14px; }
+  .role-block:last-of-type { margin-bottom:0; }
+  .role-title { font-size:.8rem; font-weight:800; color:#166a45; margin-bottom:6px; }
+  .cred-row { display:flex; justify-content:space-between; align-items:center; background:#fff; border:1px solid #bdf0d4; border-radius:8px; padding:9px 12px; margin-bottom:6px; }
+  .cred-row .lbl { font-size:.7rem; color:#6b7794; font-weight:700; text-transform:uppercase; }
+  .cred-row .val { font-size:1rem; font-weight:800; color:var(--navy); letter-spacing:.5px; }
+  .result .warn { font-size:.78rem; color:#b45309; background:#fef3c7; border-radius:8px; padding:8px 10px; margin-top:12px; }
   .foot { text-align:center; font-size:.75rem; color:#8894b3; margin-top:18px; }
   .foot a { color:var(--navy); }
 </style>
@@ -42,7 +49,7 @@
 
   <div class="card" id="formCard">
     <h1>नयाँ स्कूल कोड खरिद</h1>
-    <p class="sub">आफ्नो विद्यालयको जानकारी भरेर तुरुन्त School Code प्राप्त गर्नुहोस्। भुक्तानी पछि तपाईंलाई यहीं Principal, Teacher, र Parent code देखाइनेछ।</p>
+    <p class="sub">आफ्नो विद्यालयको जानकारी भरेर तुरुन्त School Code प्राप्त गर्नुहोस्। भुक्तानी पछि तपाईंलाई यहीं Principal, Teacher, र Parent — तीनैको access देखाइनेछ।</p>
 
     <label for="sName">विद्यालयको नाम</label>
     <input id="sName" placeholder="उदाहरण: Shree Janata Secondary School" />
@@ -62,7 +69,27 @@
     <div class="status" id="status"></div>
   </div>
 
-  <div class="card result" id="resultCard"></div>
+  <div class="card result" id="resultCard">
+    <h2>✅ तपाईंको स्कूल तयार भयो!</h2>
+
+    <div class="role-block">
+      <div class="role-title">👤 Principal</div>
+      <div class="cred-row"><span class="lbl">School Code</span><span class="val" id="outCode"></span></div>
+      <div class="cred-row"><span class="lbl">Password</span><span class="val" id="outPrincipalPass"></span></div>
+    </div>
+
+    <div class="role-block">
+      <div class="role-title">📚 Teacher</div>
+      <div class="cred-row"><span class="lbl">Teacher Code</span><span class="val" id="outTeacherCode"></span></div>
+    </div>
+
+    <div class="role-block">
+      <div class="role-title">👨‍👩‍👧 Parent</div>
+      <div class="cred-row"><span class="lbl">Parent Code</span><span class="val" id="outParentCode"></span></div>
+    </div>
+
+    <div class="warn">⚠️ Principal Password फेरि यहाँ देखिँदैन — अहिले नै screenshot लिनुहोस् वा सुरक्षित ठाउँमा लेखिराख्नुहोस्। Teacher/Parent Code भने पछि पनि Principal Dashboard बाट हेर्न मिल्छ।</div>
+  </div>
 
   <div class="foot">पहिले नै School Code छ? <a href="./renew.html">यहाँबाट नवीकरण गर्नुहोस्</a></div>
 </main>
@@ -121,10 +148,15 @@
         return;
       }
 
-      // Save the new code locally so we can show it after the eSewa/Khalti redirect
-      // sends the person back here (their code is already active in the database
-      // by the time they return, regardless of what this browser tab remembers).
+      // Save everything locally so we can show it once the eSewa/Khalti redirect
+      // sends the person back here. The principal password only exists in plaintext
+      // for this one moment (it's bcrypt-hashed server-side right after), so this is
+      // the only chance to show it. Teacher/parent codes are stored plainly and could
+      // also be re-fetched later from the Principal Dashboard.
       sessionStorage.setItem("ssms_new_code", data.invite_code);
+      sessionStorage.setItem("ssms_new_pass", data.principal_password);
+      sessionStorage.setItem("ssms_new_teacher", data.teacher_code);
+      sessionStorage.setItem("ssms_new_parent", data.parent_code);
 
       statusEl.textContent = "सफल! भुक्तानी पेजमा लैजाँदैछ...";
       statusEl.className = "status ok";
@@ -141,15 +173,22 @@
   });
 
   // If we're coming back from a payment redirect (same tab, same origin), sessionStorage
-  // still has the code we generated just before leaving for eSewa/Khalti -- show it.
+  // still has everything we generated just before leaving for eSewa/Khalti.
   const savedCode = sessionStorage.getItem("ssms_new_code");
-  if (savedCode) {
+  const savedPass = sessionStorage.getItem("ssms_new_pass");
+  const savedTeacher = sessionStorage.getItem("ssms_new_teacher");
+  const savedParent = sessionStorage.getItem("ssms_new_parent");
+  if (savedCode && savedPass) {
     document.getElementById("formCard").style.display = "none";
-    const resultCard = document.getElementById("resultCard");
-    resultCard.style.display = "block";
-    resultCard.innerHTML = "<b>तपाईंको School Code:</b> " + savedCode +
-      "<br>App मा गएर यही code ले Principal login गर्नुहोस्। भुक्तानी पुष्टि हुन केही मिनेट लाग्न सक्छ।";
+    document.getElementById("resultCard").style.display = "block";
+    document.getElementById("outCode").textContent = savedCode;
+    document.getElementById("outPrincipalPass").textContent = savedPass;
+    document.getElementById("outTeacherCode").textContent = savedTeacher || "-";
+    document.getElementById("outParentCode").textContent = savedParent || "-";
     sessionStorage.removeItem("ssms_new_code");
+    sessionStorage.removeItem("ssms_new_pass");
+    sessionStorage.removeItem("ssms_new_teacher");
+    sessionStorage.removeItem("ssms_new_parent");
   }
 </script>
 </body>
