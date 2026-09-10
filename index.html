@@ -17,7 +17,16 @@
 
 <link rel="icon" href="assets/ssms-logo.jpg">
 
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Nepal:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- FIXED (PageSpeed: render-blocking requests, ~1s savings): the font
+     stylesheet used to block first paint until it finished downloading.
+     preconnect warms up the connection early; loading the stylesheet with
+     media="print" then flipping it to "all" onload is the standard trick to
+     fetch it without blocking render -- the <noscript> fallback covers
+     browsers with JS disabled, so nothing is lost, just no longer blocking. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Nepal:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Nepal:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -140,6 +149,25 @@ h2.section-title {
   text-align: center; margin-bottom: 18px; letter-spacing: -0.3px;
 }
 
+/* ADDED: App screenshot gallery -- horizontal-scroll strip of real phone
+   screenshots (Login, Principal/Teacher/Parent dashboards, weekly form entry,
+   exam analytics) so a visitor can see the actual product before downloading,
+   instead of only icons/text. */
+.shots-scroll {
+  display: flex; gap: 16px; overflow-x: auto; padding: 4px 20px 14px;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+}
+.shots-scroll::-webkit-scrollbar { height: 6px; }
+.shots-scroll::-webkit-scrollbar-thumb { background: var(--line); border-radius: 10px; }
+.shot-card { flex: 0 0 auto; width: 180px; scroll-snap-align: start; text-align: center; }
+.shot-frame {
+  border-radius: 18px; overflow: hidden; border: 1px solid var(--line);
+  box-shadow: 0 6px 20px rgba(13,27,75,0.12); background: var(--white);
+  aspect-ratio: 9 / 20; margin-bottom: 10px;
+}
+.shot-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.shot-label { font-size: 12.5px; font-weight: 700; color: var(--navy); }
+
 /* SSMS के हो */
 .about-card {
   background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg);
@@ -249,7 +277,7 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
 <nav class="topnav">
   <div class="topnav-inner">
     <div class="brand">
-      <span class="mark"><img src="assets/science-vision-logo.jpg" alt="Science Vision Exhibition and Planetarium Pvt. Ltd. logo"></span>
+      <span class="mark"><img src="assets/science-vision-logo.webp" alt="Science Vision Exhibition and Planetarium Pvt. Ltd. logo"></span>
       <span class="brand-name-full">Science Vision Exhibition &amp; Planetarium</span>
       <span class="brand-name-short">Science Vision</span>
     </div>
@@ -266,7 +294,7 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
 <header class="hero">
   <div class="hero-inner">
     <div class="badge">Official Release</div>
-    <div class="hero-icon"><img src="assets/ssms-logo.jpg" alt="SSMS — Smart Student Monitor System logo"></div>
+    <div class="hero-icon"><img src="assets/ssms-logo.webp" alt="SSMS — Smart Student Monitor System logo"></div>
     <h1>SSMS</h1>
     <p class="h1-sub">Smart Student Monitor System</p>
     <p class="subheading">विद्यार्थी अनुगमन तथा डिजिटल बानी सुधारमा विद्यालयलाई सहयोग गर्ने प्रणाली</p>
@@ -280,6 +308,41 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
     </div>
   </div>
 </header>
+
+<!-- FIXED (PageSpeed accessibility: "Document does not have a main landmark") --><main>
+<!-- ============ APP SCREENSHOTS ============ -->
+<section id="screenshots" style="padding-bottom:14px;">
+  <div class="section-inner" style="max-width:100%;">
+    <p class="eyebrow-label">एप कस्तो देखिन्छ</p>
+    <h2 class="section-title">वास्तविक SSMS एपको झलक</h2>
+  </div>
+  <div class="shots-scroll">
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/login.webp" alt="SSMS लगइन स्क्रिन — School Staff र Parent Portal"></div>
+      <div class="shot-label">लगइन</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/principal.webp" alt="Principal Dashboard — subscription र school overview"></div>
+      <div class="shot-label">Principal Dashboard</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/teacher.webp" alt="Teacher Panel — class habit र exam comparison"></div>
+      <div class="shot-label">Teacher Panel</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/parent.webp" alt="Parent Portal — विद्यार्थीको साप्ताहिक रिपोर्ट"></div>
+      <div class="shot-label">Parent Portal</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/weekly-form.webp" alt="साप्ताहिक डिजिटल बानी फारम भर्ने स्क्रिन"></div>
+      <div class="shot-label">साप्ताहिक फारम</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/exam-chart.webp" alt="परीक्षा तुलनात्मक 3D चार्ट"></div>
+      <div class="shot-label">परीक्षा विश्लेषण</div>
+    </div>
+  </div>
+</section>
 
 <!-- ============ SSMS के हो ============ -->
 <section id="about">
@@ -365,7 +428,7 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
   <div class="section-inner">
     <div class="sv-card">
       <div class="sv-card-head">
-        <span class="sv-logo"><img src="assets/science-vision-logo.jpg" alt="Science Vision Exhibition and Planetarium Pvt. Ltd. logo"></span>
+        <span class="sv-logo"><img loading="lazy" decoding="async" src="assets/science-vision-logo.webp" alt="Science Vision Exhibition and Planetarium Pvt. Ltd. logo"></span>
         <div>
           <p class="eyebrow-label" style="margin-bottom:2px;">परिचालक संस्था</p>
           <h2>Science Vision Exhibition &amp; Planetarium Pvt. Ltd.</h2>
@@ -399,7 +462,7 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
     <p class="eyebrow-label">एप डाउनलोड</p>
     <h2 class="section-title">SSMS APK Download</h2>
     <div class="apk-card">
-      <div class="apk-logo"><img src="assets/ssms-logo.jpg" alt="SSMS app logo"></div>
+      <div class="apk-logo"><img loading="lazy" decoding="async" src="assets/ssms-logo.webp" alt="SSMS app logo"></div>
       <div class="apk-meta">
         <span class="apk-pill">Official Release</span>
         <span class="apk-pill">Android 7.0+</span>
@@ -425,10 +488,12 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
 </section>
 
 <!-- ============ FOOTER ============ -->
+</main>
+
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <span class="footer-logo"><img src="assets/science-vision-logo.jpg" alt="Science Vision Exhibition and Planetarium Pvt. Ltd. logo"></span>
+      <span class="footer-logo"><img loading="lazy" decoding="async" src="assets/science-vision-logo.webp" alt="Science Vision Exhibition and Planetarium Pvt. Ltd. logo"></span>
       Science Vision Exhibition &amp; Planetarium Pvt. Ltd.
     </div>
     <div class="footer-tagline">SSMS — Smart Student Monitor System</div>
