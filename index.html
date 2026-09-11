@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="SSMS — Science Vision Nepal">
 <meta property="og:locale" content="ne_NP">
 
-<link rel="icon" href="assets/ssms-logo.jpg">
+<link rel="icon" href="assets/ssms-logo.webp">
 
 <!-- FIXED (PageSpeed: render-blocking requests, ~1s savings): the font
      stylesheet used to block first paint until it finished downloading.
@@ -27,37 +27,54 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Nepal:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Nepal:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<noscript><style>.fade-up { opacity: 1 !important; transform: none !important; }</style></noscript>
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --navy: #0D1B4B;
-  --blue: #1A3A8F;
-  --sky: #3B82F6;
-  --gold: #F59E0B;
-  --light: #EEF2FF;
+  /* Brand color system -- Science Vision / SSMS teal identity */
+  --teal: #189085;
+  --teal-dark: #0F6B62;
+  --indigo: #4B4098;
+  --success: #1F8A5C;
+  --error: #C6423A;
+  --bg: #FAF9F6;
   --white: #FFFFFF;
-  --text: #1E293B;
-  --muted: #64748B;
-  --line: #E2E8F0;
-  --radius: 16px;
-  --radius-lg: 24px;
+  --navy: #0F3B36;      /* deep heading ink, teal-tinted (was pure navy) */
+  --text: #1E2B29;
+  --muted: #63706D;
+  --line: #E4E7E3;
+  --radius: 18px;
+  --radius-lg: 26px;
+  /* Soft layered 3D shadow system -- three depth tiers, never harsh/black */
+  --shadow-flat: 0 1px 3px rgba(15,59,54,0.05);
+  --shadow-sm: 0 2px 8px rgba(15,59,54,0.06), 0 1px 2px rgba(15,59,54,0.04);
+  --shadow-md: 0 8px 24px rgba(15,59,54,0.10), 0 2px 6px rgba(15,59,54,0.05);
+  --shadow-lg: 0 16px 40px rgba(15,59,54,0.14), 0 4px 10px rgba(15,59,54,0.06);
+  --shadow-indigo: 0 10px 28px rgba(75,64,152,0.16), 0 2px 8px rgba(75,64,152,0.08);
 }
 html { scroll-behavior: smooth; }
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--light);
+  background: var(--bg);
   color: var(--text);
   min-height: 100vh;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 img, svg { display: block; max-width: 100%; }
 a { color: inherit; }
 .container { width: 100%; max-width: 720px; margin: 0 auto; padding: 0 20px; }
 
+@media (prefers-reduced-motion: no-preference) {
+  .fade-up { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.in-view { opacity: 1; transform: translateY(0); }
+}
+
 /* ---------- Top nav ---------- */
 .topnav {
-  background: var(--white);
+  background: rgba(250,249,246,0.92);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
   position: sticky; top: 0; z-index: 10;
 }
@@ -75,52 +92,57 @@ a { color: inherit; }
 .brand .brand-name-full { display: none; }
 @media (min-width: 460px) { .brand .brand-name-full { display: inline; } .brand .brand-name-short { display: none; } }
 .topnav-links { display: none; gap: 22px; font-size: 14px; font-weight: 600; color: var(--muted); }
-.topnav-links a:hover { color: var(--blue); }
+.topnav-links a { transition: color 0.15s ease; }
+.topnav-links a:hover { color: var(--teal-dark); }
 @media (min-width: 680px) { .topnav-links { display: flex; } }
 
 /* ---------- Hero ---------- */
 .hero {
   position: relative; overflow: hidden;
-  padding: 56px 20px 44px;
+  padding: 60px 20px 46px;
   text-align: center;
+  background: linear-gradient(180deg, #EFF7F5 0%, var(--bg) 78%);
 }
 .hero::before {
   content: '';
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 70% 55% at 20% -10%, rgba(59,130,246,0.14) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 45% at 85% 110%, rgba(13,27,75,0.08) 0%, transparent 60%);
+    radial-gradient(ellipse 60% 50% at 50% -10%, rgba(24,144,133,0.16) 0%, transparent 62%),
+    radial-gradient(ellipse 45% 40% at 90% 105%, rgba(75,64,152,0.07) 0%, transparent 60%);
   pointer-events: none;
 }
 .hero-inner { position: relative; max-width: 620px; margin: 0 auto; }
 .badge {
   display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(59,130,246,0.12); color: var(--blue);
+  background: rgba(24,144,133,0.12); color: var(--teal-dark);
   font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
   padding: 6px 14px; border-radius: 100px; margin-bottom: 22px;
-  border: 1px solid rgba(59,130,246,0.2);
+  border: 1px solid rgba(24,144,133,0.22);
 }
-.badge::before { content: '●'; font-size: 8px; color: var(--sky); }
+.badge::before { content: '●'; font-size: 8px; color: var(--teal); }
 .hero-icon {
-  width: 84px; height: 84px; margin: 0 auto 20px;
-  border-radius: 22px; overflow: hidden;
-  box-shadow: 0 10px 26px rgba(13,27,75,0.28);
-  border: 1px solid rgba(13,27,75,0.08);
+  width: 88px; height: 88px; margin: 0 auto 22px;
+  border-radius: 24px; overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(15,59,54,0.08);
+  animation: floaty 5s ease-in-out infinite;
 }
+@media (prefers-reduced-motion: reduce) { .hero-icon { animation: none; } }
+@keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 .hero-icon img { width: 100%; height: 100%; object-fit: cover; }
 .hero h1 {
-  font-size: clamp(30px, 6vw, 42px); font-weight: 800; color: var(--navy);
+  font-size: clamp(32px, 6vw, 44px); font-weight: 800; color: var(--navy);
   letter-spacing: -0.5px; margin-bottom: 4px;
 }
 .hero .h1-sub {
-  font-size: clamp(15px, 3vw, 19px); font-weight: 700; color: var(--sky); margin-bottom: 16px;
+  font-size: clamp(15px, 3vw, 19px); font-weight: 700; color: var(--teal-dark); margin-bottom: 18px;
 }
 .hero .subheading {
   font-family: 'Tiro Devanagari Nepal', serif;
-  font-size: 16px; color: var(--text); margin-bottom: 10px; line-height: 1.7;
+  font-size: 16.5px; color: var(--text); margin-bottom: 10px; line-height: 1.75;
 }
 .hero .tagline {
-  font-size: 14px; color: var(--muted); margin-bottom: 30px; line-height: 1.7;
+  font-size: 14px; color: var(--muted); margin-bottom: 32px; line-height: 1.75;
   max-width: 480px; margin-left: auto; margin-right: auto;
 }
 .hero-buttons { display: flex; flex-direction: column; gap: 12px; max-width: 360px; margin: 0 auto; }
@@ -131,39 +153,47 @@ a { color: inherit; }
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   border: none; cursor: pointer;
 }
-.btn:hover { transform: translateY(-2px); }
-.btn:active { transform: translateY(0); }
-.btn-primary { background: linear-gradient(135deg, var(--navy), var(--blue)); color: var(--white); box-shadow: 0 6px 18px rgba(13,27,75,0.28); }
-.btn-outline { background: var(--white); color: var(--navy); border: 1.5px solid var(--line); }
-.btn-outline:hover { border-color: var(--sky); }
+@media (hover: hover) { .btn:hover { transform: translateY(-2px); } }
+.btn:active { transform: translateY(1px) scale(0.99); }
+.btn-primary { background: linear-gradient(135deg, var(--teal), var(--teal-dark)); color: var(--white); box-shadow: var(--shadow-md); }
+@media (hover: hover) { .btn-primary:hover { box-shadow: var(--shadow-lg); } }
+.btn-outline { background: var(--white); color: var(--navy); border: 1.5px solid var(--line); box-shadow: var(--shadow-flat); }
+@media (hover: hover) { .btn-outline:hover { border-color: var(--teal); box-shadow: var(--shadow-sm); } }
 
 /* ---------- Sections ---------- */
-section { padding: 44px 20px; }
+section { padding: 46px 20px; }
 .section-inner { max-width: 680px; margin: 0 auto; }
+.section-tint { background: linear-gradient(180deg, rgba(24,144,133,0.05), transparent 65%); }
 .eyebrow-label {
   font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--sky); margin-bottom: 8px; text-align: center;
+  color: var(--teal-dark); margin-bottom: 8px; text-align: center;
 }
 h2.section-title {
-  font-size: clamp(22px, 4.4vw, 28px); font-weight: 800; color: var(--navy);
-  text-align: center; margin-bottom: 18px; letter-spacing: -0.3px;
+  font-size: clamp(23px, 4.4vw, 29px); font-weight: 800; color: var(--navy);
+  text-align: center; margin-bottom: 20px; letter-spacing: -0.3px; line-height: 1.3;
 }
 
-/* ADDED: App screenshot gallery -- horizontal-scroll strip of real phone
-   screenshots (Login, Principal/Teacher/Parent dashboards, weekly form entry,
-   exam analytics) so a visitor can see the actual product before downloading,
-   instead of only icons/text. */
+/* App screenshot gallery -- horizontal-scroll strip of real phone screenshots
+   from the SSMS app (login, dashboards, AI analytics, marksheets, digital
+   habit tracking) presented in floating rounded device frames. */
 .shots-scroll {
-  display: flex; gap: 16px; overflow-x: auto; padding: 4px 20px 14px;
+  display: flex; gap: 18px; overflow-x: auto; padding: 8px 20px 16px;
   scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
 }
 .shots-scroll::-webkit-scrollbar { height: 6px; }
 .shots-scroll::-webkit-scrollbar-thumb { background: var(--line); border-radius: 10px; }
-.shot-card { flex: 0 0 auto; width: 180px; scroll-snap-align: start; text-align: center; }
+.shot-card { flex: 0 0 auto; width: 172px; scroll-snap-align: start; text-align: center; }
 .shot-frame {
-  border-radius: 18px; overflow: hidden; border: 1px solid var(--line);
-  box-shadow: 0 6px 20px rgba(13,27,75,0.12); background: var(--white);
-  aspect-ratio: 9 / 20; margin-bottom: 10px;
+  position: relative;
+  border-radius: 20px; overflow: hidden;
+  border: 3px solid var(--white);
+  outline: 1px solid var(--line);
+  box-shadow: var(--shadow-md);
+  aspect-ratio: 9 / 19.5; margin-bottom: 10px; background: var(--white);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+@media (hover: hover) {
+  .shot-card:hover .shot-frame { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 }
 .shot-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
 .shot-label { font-size: 12.5px; font-weight: 700; color: var(--navy); }
@@ -171,101 +201,117 @@ h2.section-title {
 /* SSMS के हो */
 .about-card {
   background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg);
-  padding: 28px 26px; box-shadow: 0 2px 10px rgba(13,27,75,0.05);
+  padding: 28px 26px; box-shadow: var(--shadow-sm);
 }
 .about-card p { font-size: 15px; color: var(--text); margin-bottom: 14px; line-height: 1.8; }
 .about-card p:last-child { margin-bottom: 0; }
 .about-card strong { color: var(--navy); }
 
 /* Feature cards */
-.features-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.features-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
 @media (min-width: 560px) { .features-grid { grid-template-columns: 1fr 1fr; } }
 .feature-card {
   background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 20px; box-shadow: 0 1px 4px rgba(13,27,75,0.04);
+  padding: 22px; box-shadow: var(--shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
-.feature-card .emoji { font-size: 26px; margin-bottom: 10px; }
-.feature-card h3 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
-.feature-card p { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+@media (hover: hover) { .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); } }
+.feature-card .icon-wrap {
+  width: 46px; height: 46px; border-radius: 14px; margin-bottom: 14px;
+  display: flex; align-items: center; justify-content: center; font-size: 22px;
+  background: rgba(24,144,133,0.10);
+}
+.feature-card.icon-success .icon-wrap { background: rgba(31,138,92,0.12); }
+.feature-card.icon-ai { border: 1px solid rgba(75,64,152,0.22); box-shadow: var(--shadow-indigo); }
+.feature-card.icon-ai .icon-wrap { background: rgba(75,64,152,0.12); }
+.feature-card h3 { font-size: 15.5px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.feature-card p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
 
 /* Flow / support-not-replace section */
 .flow-wrap {
   background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg);
-  padding: 30px 24px; text-align: center;
+  padding: 32px 24px; text-align: center; box-shadow: var(--shadow-sm);
 }
-.flow-steps { display: flex; flex-direction: column; align-items: center; gap: 4px; margin: 20px 0; }
+.flow-steps { display: flex; flex-direction: column; align-items: center; gap: 2px; margin: 22px 0; }
 .flow-step {
-  background: var(--light); border: 1px solid rgba(59,130,246,0.18); color: var(--navy);
-  font-size: 13.5px; font-weight: 700; padding: 10px 18px; border-radius: 100px;
-  width: 100%; max-width: 300px;
+  display: flex; align-items: center; gap: 10px; justify-content: center;
+  background: rgba(24,144,133,0.06); border: 1px solid rgba(24,144,133,0.18); color: var(--navy);
+  font-size: 13.5px; font-weight: 700; padding: 11px 18px; border-radius: 100px;
+  width: 100%; max-width: 320px; box-shadow: var(--shadow-flat);
 }
-.flow-step.dim { background: transparent; border-color: var(--line); color: var(--muted); font-weight: 600; }
-.flow-arrow { color: var(--sky); font-size: 16px; line-height: 1; }
-.flow-note { font-size: 13.5px; color: var(--muted); line-height: 1.7; margin-top: 16px; }
+.flow-step .num {
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--teal); color: var(--white); font-size: 11.5px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.flow-step.dim { background: transparent; border-color: var(--line); color: var(--muted); font-weight: 600; box-shadow: none; }
+.flow-step.dim .num { background: var(--line); color: var(--muted); }
+.flow-arrow { color: var(--teal); font-size: 16px; line-height: 1; }
+.flow-note { font-size: 13.5px; color: var(--muted); line-height: 1.7; margin-top: 18px; }
 .flow-note strong { color: var(--navy); }
 
-/* Science Vision */
+/* Science Vision -- trust section: clean and calm rather than decorative */
 .sv-card {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
-  border-radius: var(--radius-lg); padding: 30px 26px; color: var(--white);
+  background: var(--white); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 30px 26px; box-shadow: var(--shadow-sm);
 }
 .sv-card-head { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
 .sv-logo {
-  width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0;
-  overflow: hidden; border: 2px solid rgba(255,255,255,0.35);
+  width: 60px; height: 60px; border-radius: 50%; flex-shrink: 0;
+  overflow: hidden; border: 1px solid var(--line);
   background: var(--white);
 }
 .sv-logo img { width: 100%; height: 100%; object-fit: cover; }
-.sv-card h2 { color: var(--white); text-align: left; margin: 0; font-size: clamp(18px,3.6vw,23px); }
-.sv-card .eyebrow-label { color: rgba(255,255,255,0.7); text-align: left; }
-.sv-card p { font-size: 14.5px; line-height: 1.8; color: rgba(255,255,255,0.92); margin-bottom: 14px; }
-.sv-card p:last-child { margin-bottom: 0; font-weight: 700; }
+.sv-card h2 { color: var(--navy); text-align: left; margin: 0; font-size: clamp(18px,3.6vw,23px); }
+.sv-card .eyebrow-label { color: var(--teal-dark); text-align: left; }
+.sv-card p { font-size: 14.5px; line-height: 1.8; color: var(--text); margin-bottom: 14px; }
+.sv-card p:last-child { margin-bottom: 0; font-weight: 700; color: var(--navy); }
 
-/* School service / payment */
+/* School service / payment -- primary conversion card */
 .service-card {
-  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg);
-  padding: 28px 24px; text-align: center;
+  background: var(--white); border: 1.5px solid rgba(24,144,133,0.30); border-radius: var(--radius-lg);
+  padding: 30px 24px; text-align: center; box-shadow: var(--shadow-md);
 }
 .service-card p.sub { font-size: 14px; color: var(--muted); margin-bottom: 22px; line-height: 1.7; }
 .service-buttons { display: flex; flex-direction: column; gap: 12px; max-width: 360px; margin: 0 auto; }
-.btn-service-primary { background: linear-gradient(135deg, #6D28D9, #4C1D95); color: var(--white); box-shadow: 0 6px 18px rgba(76,29,149,0.25); }
-.btn-service-secondary { background: var(--light); color: var(--navy); border: 1.5px solid rgba(59,130,246,0.2); }
+.btn-service-primary { background: linear-gradient(135deg, var(--indigo), #372e73); color: var(--white); box-shadow: var(--shadow-indigo); }
+.btn-service-secondary { background: rgba(24,144,133,0.07); color: var(--navy); border: 1.5px solid rgba(24,144,133,0.22); }
 .service-disclaimer {
   margin-top: 18px; font-size: 12px; color: var(--muted); line-height: 1.6;
-  background: var(--light); border-radius: 10px; padding: 10px 14px;
+  background: rgba(24,144,133,0.05); border-radius: 10px; padding: 10px 14px;
 }
 
 /* APK download */
 .apk-card {
   background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg);
-  padding: 28px 24px; text-align: center;
+  padding: 28px 24px; text-align: center; box-shadow: var(--shadow-sm);
 }
-.apk-logo { width: 52px; height: 52px; border-radius: 14px; overflow: hidden; margin: 0 auto 14px; box-shadow: 0 4px 14px rgba(13,27,75,0.16); }
+.apk-logo { width: 52px; height: 52px; border-radius: 14px; overflow: hidden; margin: 0 auto 14px; box-shadow: var(--shadow-sm); }
 .apk-logo img { width: 100%; height: 100%; object-fit: cover; }
 .apk-meta { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
 .apk-pill {
-  background: var(--light); color: var(--blue); font-size: 12px; font-weight: 700;
-  padding: 5px 13px; border-radius: 100px; border: 1px solid rgba(59,130,246,0.15);
+  background: rgba(24,144,133,0.08); color: var(--teal-dark); font-size: 12px; font-weight: 700;
+  padding: 5px 13px; border-radius: 100px; border: 1px solid rgba(24,144,133,0.18);
 }
 .qr-section {
-  background: var(--light); border-radius: var(--radius); padding: 20px;
-  border: 1px solid rgba(59,130,246,0.12); margin-top: 22px; display: inline-block;
+  background: rgba(24,144,133,0.05); border-radius: var(--radius); padding: 20px;
+  border: 1px solid rgba(24,144,133,0.14); margin-top: 22px; display: inline-block;
 }
 .qr-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
-.qr-section img { width: 140px; height: 140px; border-radius: 10px; border: 3px solid var(--white); box-shadow: 0 2px 12px rgba(0,0,0,0.10); margin: 0 auto; }
+.qr-section img { width: 140px; height: 140px; border-radius: 10px; border: 3px solid var(--white); box-shadow: var(--shadow-sm); margin: 0 auto; }
 .trust-row { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 22px; font-size: 12px; color: var(--muted); }
 
 /* Footer */
-footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); padding: 40px 20px 28px; }
+footer.site-footer { background: var(--teal-dark); color: rgba(255,255,255,0.85); padding: 40px 20px 28px; }
 .footer-inner { max-width: 680px; margin: 0 auto; }
 .footer-brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--white); font-size: 16px; margin-bottom: 6px; }
 .footer-logo { width: 28px; height: 28px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.25); }
 .footer-logo img { width: 100%; height: 100%; object-fit: cover; }
-.footer-tagline { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 22px; }
+.footer-tagline { font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 22px; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13.5px; font-weight: 600; margin-bottom: 22px; }
 .footer-links a { text-decoration: none; color: rgba(255,255,255,0.85); }
 .footer-links a:hover { color: var(--white); text-decoration: underline; }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 18px; font-size: 12px; color: rgba(255,255,255,0.55); display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: space-between; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.18); padding-top: 18px; font-size: 12px; color: rgba(255,255,255,0.6); display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: space-between; }
 
 @media (max-width: 400px) {
   .about-card, .flow-wrap, .sv-card, .service-card, .apk-card { padding: 22px 18px; }
@@ -326,20 +372,68 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
       <div class="shot-label">Principal Dashboard</div>
     </div>
     <div class="shot-card">
-      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/teacher.webp" alt="Teacher Panel — class habit र exam comparison"></div>
-      <div class="shot-label">Teacher Panel</div>
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/principal-tools-menu.webp" alt="Principal Analytics र Tools मेनु — Digital Habit र Exam Comparison"></div>
+      <div class="shot-label">Analytics टूल्स</div>
     </div>
     <div class="shot-card">
-      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/parent.webp" alt="Parent Portal — विद्यार्थीको साप्ताहिक रिपोर्ट"></div>
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/parent-portal.webp" alt="Parent Portal — विद्यार्थीको साप्ताहिक रिपोर्ट"></div>
       <div class="shot-label">Parent Portal</div>
     </div>
     <div class="shot-card">
-      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/weekly-form.webp" alt="साप्ताहिक डिजिटल बानी फारम भर्ने स्क्रिन"></div>
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/parent-communication-inbox.webp" alt="अभिभावक सञ्चार संवाद — Parent Inbox"></div>
+      <div class="shot-label">अभिभावक संवाद</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/weekly-form-entry.webp" alt="साप्ताहिक डिजिटल बानी फारम भर्ने स्क्रिन"></div>
       <div class="shot-label">साप्ताहिक फारम</div>
     </div>
     <div class="shot-card">
-      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/exam-chart.webp" alt="परीक्षा तुलनात्मक 3D चार्ट"></div>
-      <div class="shot-label">परीक्षा विश्लेषण</div>
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/weekly-form-history.webp" alt="भौतिक फारमको ऐतिहासिक अभिलेख"></div>
+      <div class="shot-label">फारम इतिहास</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/ai-analysis-suggestions.webp" alt="AI आधारित सुझाव — Marksheet Analysis"></div>
+      <div class="shot-label">AI सल्लाह</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/digital-habit-comparison-list.webp" alt="कक्षा-वार डिजिटल बानी तुलना सूची"></div>
+      <div class="shot-label">डिजिटल बानी तुलना</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/digital-habit-class-comparison.webp" alt="विद्यार्थी-वार डिजिटल बानी तुलना ट्रेन्ड"></div>
+      <div class="shot-label">कक्षा-वार तुलना</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/student-habit-trend-chart.webp" alt="विद्यार्थीको साप्ताहिक बानी ट्रेन्ड 3D चार्ट"></div>
+      <div class="shot-label">साप्ताहिक ट्रेन्ड</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/school-wide-risk-status.webp" alt="विद्यालयव्यापी डिजिटल बानी जोखिम स्थिति"></div>
+      <div class="shot-label">विद्यालयव्यापी जोखिम</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/school-wide-habit-improvement.webp" alt="विद्यालयव्यापी बानी सुधार विश्लेषण"></div>
+      <div class="shot-label">बानी सुधार</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/student-profile-overview.webp" alt="विद्यार्थी प्रोफाइल — GPA, हाजिरी, स्क्रिन, व्यवहार"></div>
+      <div class="shot-label">विद्यार्थी प्रोफाइल</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/marksheet-3d-comparison.webp" alt="अंकतालिका तुलनात्मक 3D चार्ट"></div>
+      <div class="shot-label">अंकतालिका तुलना</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/subject-exam-3d-analysis.webp" alt="विषयगत परीक्षा तुलनात्मक 3D विश्लेषण"></div>
+      <div class="shot-label">विषयगत विश्लेषण</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/exam-class-comparison-tools.webp" alt="परीक्षा व्यवस्थापन — Manage Exams, Marksheets"></div>
+      <div class="shot-label">परीक्षा व्यवस्थापन</div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-frame"><img loading="lazy" decoding="async" src="assets/screenshots/exam-top-performers.webp" alt="कक्षा तुलना र उत्कृष्ट विद्यार्थीहरू"></div>
+      <div class="shot-label">उत्कृष्ट विद्यार्थी</div>
     </div>
   </div>
 </section>
@@ -349,7 +443,7 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
   <div class="section-inner">
     <p class="eyebrow-label">परिचय</p>
     <h2 class="section-title">SSMS के हो?</h2>
-    <div class="about-card">
+    <div class="about-card fade-up">
       <p><strong>SSMS (Smart Student Monitor System)</strong> विद्यार्थीको डिजिटल बानी, अध्ययनसँग सम्बन्धित व्यवहार तथा विद्यार्थीको समग्र अनुशासन र जोखिमका संकेतहरूलाई व्यवस्थित रूपमा अनुगमन गर्न विद्यालयलाई सहयोग गर्ने प्रणाली हो।</p>
       <p>यो विद्यालयको मुख्य School Management Software वा MIS को विकल्प होइन। विद्यालयमा प्रयोग भइरहेको प्रशासनिक, परीक्षा, लेखा तथा अन्य व्यवस्थापन प्रणाली यथावत् सञ्चालन भइरहन्छ। SSMS ले त्यसै प्रणालीसँगै काम गर्दै विद्यार्थी केन्द्रित अनुगमन, विश्लेषण, अभिभावक–विद्यालय सहकार्य तथा आवश्यक परामर्शमा सहयोग गर्छ।</p>
     </div>
@@ -357,38 +451,38 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
 </section>
 
 <!-- ============ FEATURES ============ -->
-<section id="features">
+<section id="features" class="section-tint">
   <div class="section-inner">
     <p class="eyebrow-label">सुविधाहरू</p>
     <h2 class="section-title">SSMS का मुख्य सुविधाहरू</h2>
     <div class="features-grid">
-      <div class="feature-card">
-        <div class="emoji">📱</div>
+      <div class="feature-card fade-up">
+        <div class="icon-wrap">📱</div>
         <h3>डिजिटल बानी अनुगमन</h3>
         <p>विद्यार्थीको मोबाइल तथा डिजिटल बानीसम्बन्धी जानकारी व्यवस्थित रूपमा बुझ्न सहयोग।</p>
       </div>
-      <div class="feature-card">
-        <div class="emoji">📊</div>
+      <div class="feature-card fade-up">
+        <div class="icon-wrap">📊</div>
         <h3>विद्यार्थी जोखिम विश्लेषण</h3>
         <p>सम्बन्धित सूचकहरूको आधारमा जोखिमको अवस्था पहिचान गर्न सहयोग।</p>
       </div>
-      <div class="feature-card">
-        <div class="emoji">🧠</div>
+      <div class="feature-card icon-ai fade-up">
+        <div class="icon-wrap">🧠</div>
         <h3>AI आधारित सुझाव</h3>
         <p>विद्यार्थीको अवस्थाअनुसार शिक्षक तथा अभिभावकलाई आवश्यक सुझाव उपलब्ध गराउने।</p>
       </div>
-      <div class="feature-card">
-        <div class="emoji">👨‍👩‍👧</div>
+      <div class="feature-card fade-up">
+        <div class="icon-wrap">👨‍👩‍👧</div>
         <h3>अभिभावक–विद्यालय सहकार्य</h3>
         <p>विद्यार्थीको सुधारका लागि विद्यालय र अभिभावकबीच सहकार्य गर्न सहयोग।</p>
       </div>
-      <div class="feature-card">
-        <div class="emoji">📈</div>
+      <div class="feature-card fade-up">
+        <div class="icon-wrap">📈</div>
         <h3>कक्षा तथा विद्यार्थी विश्लेषण</h3>
         <p>सम्बन्धित विद्यार्थी तथा कक्षाको प्रवृत्ति बुझ्न सहयोग गर्ने रिपोर्ट तथा विश्लेषण।</p>
       </div>
-      <div class="feature-card">
-        <div class="emoji">🎥</div>
+      <div class="feature-card icon-success fade-up">
+        <div class="icon-wrap">🎥</div>
         <h3>डिजिटल बानी सुधारका लागि परामर्श</h3>
         <p>विद्यार्थी तथा अभिभावकका लागि डिजिटल बानी, मोबाइल प्रयोग र जिम्मेवार प्रविधि प्रयोगसम्बन्धी परामर्श सामग्री उपलब्ध गराउने।</p>
       </div>
@@ -401,19 +495,19 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
   <div class="section-inner">
     <p class="eyebrow-label">कसरी काम गर्छ</p>
     <h2 class="section-title">विद्यालयको प्रणालीलाई विस्थापन होइन, सहयोग</h2>
-    <div class="flow-wrap">
+    <div class="flow-wrap fade-up">
       <div class="flow-steps">
-        <div class="flow-step dim">तपाईंको हालको School System</div>
+        <div class="flow-step dim"><span class="num">•</span>तपाईंको हालको School System</div>
         <div class="flow-arrow">↓</div>
-        <div class="flow-step">SSMS</div>
+        <div class="flow-step"><span class="num">1</span>SSMS</div>
         <div class="flow-arrow">↓</div>
-        <div class="flow-step">Student Monitoring</div>
+        <div class="flow-step"><span class="num">2</span>Student Monitoring</div>
         <div class="flow-arrow">↓</div>
-        <div class="flow-step">Analysis &amp; Risk Identification</div>
+        <div class="flow-step"><span class="num">3</span>Analysis &amp; Risk Identification</div>
         <div class="flow-arrow">↓</div>
-        <div class="flow-step">Teacher / Principal / Parent Support</div>
+        <div class="flow-step"><span class="num">4</span>Teacher / Principal / Parent Support</div>
         <div class="flow-arrow">↓</div>
-        <div class="flow-step">Counselling &amp; Improvement</div>
+        <div class="flow-step"><span class="num">5</span>Counselling &amp; Improvement</div>
       </div>
       <p class="flow-note">
         विद्यालय आफ्नो विद्यमान प्रणालीअनुसार नै सञ्चालन हुन्छ। SSMS ले विद्यार्थी केन्द्रित monitoring र support को अतिरिक्त तहका रूपमा काम गर्छ।<br><br>
@@ -426,7 +520,7 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
 <!-- ============ SCIENCE VISION ============ -->
 <section id="science-vision">
   <div class="section-inner">
-    <div class="sv-card">
+    <div class="sv-card fade-up">
       <div class="sv-card-head">
         <span class="sv-logo"><img loading="lazy" decoding="async" src="assets/science-vision-logo.webp" alt="Science Vision Exhibition and Planetarium Pvt. Ltd. logo"></span>
         <div>
@@ -441,11 +535,11 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
 </section>
 
 <!-- ============ SCHOOL SERVICE / PAYMENT ============ -->
-<section id="school-service">
+<section id="school-service" class="section-tint">
   <div class="section-inner">
     <p class="eyebrow-label">विद्यालयका लागि</p>
     <h2 class="section-title">विद्यालयका लागि SSMS सेवा</h2>
-    <div class="service-card">
+    <div class="service-card fade-up">
       <p class="sub">आफ्नो विद्यालयका लागि SSMS सेवा सुरु गर्न वा सदस्यता नवीकरण गर्न उपलब्ध विकल्प प्रयोग गर्नुहोस्।</p>
       <div class="service-buttons">
         <a class="btn btn-service-primary" href="new-school.html">🆕 नयाँ स्कूल कोड लिनुहोस्</a>
@@ -461,7 +555,7 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
   <div class="section-inner">
     <p class="eyebrow-label">एप डाउनलोड</p>
     <h2 class="section-title">SSMS APK Download</h2>
-    <div class="apk-card">
+    <div class="apk-card fade-up">
       <div class="apk-logo"><img loading="lazy" decoding="async" src="assets/ssms-logo.webp" alt="SSMS app logo"></div>
       <div class="apk-meta">
         <span class="apk-pill">Official Release</span>
@@ -510,6 +604,23 @@ footer.site-footer { background: var(--navy); color: rgba(255,255,255,0.85); pad
     </div>
   </div>
 </footer>
+
+<!-- ADDED: minimal fade-up on scroll for cards/feature tiles -- purely
+     visual, no effect on any existing link, form, or payment logic. Falls
+     back gracefully (elements stay visible) if IntersectionObserver is
+     unavailable. -->
+<script>
+if ('IntersectionObserver' in window) {
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(function(el){ io.observe(el); });
+} else {
+  document.querySelectorAll('.fade-up').forEach(function(el){ el.classList.add('in-view'); });
+}
+</script>
 
 </body>
 </html>
