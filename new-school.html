@@ -57,14 +57,15 @@ button.pay:disabled { opacity:.55; }
 <div class="price">रु. ५,००० — पहिलो ३० दिन सक्रियता</div>
 <label>भुक्तानी विधि</label>
 <div class="methods">
-<div class="m active" data-method="esewa" id="mEsewa">eSewa</div>
-<div class="m" data-method="khalti" id="mKhalti">Khalti</div>
+<div class="m active" data-method="cips" id="mCips"><img src="assets/connectips-logo.png" alt="">connectIPS</div>
+<div class="m" data-method="qr" id="mQr">Bank QR</div>
 </div>
-<button class="pay" id="payBtn">भुक्तानी गरी कोड प्राप्त गर्नुहोस्</button>
+<button class="pay" id="payBtn">connectIPS बाट भुक्तानी गर्नुहोस्</button>
 <div class="status" id="status"></div>
 </div>
+<div class="card qrcard" id="qrCard"></div>
 <div class="card result" id="resultCard">
-<h2>✅ तपाईंको स्कूल तयार भयो!</h2>
+<h2 id="resTitle">✅ तपाईंको स्कूल तयार भयो!</h2>
 <div class="role-block">
 <div class="role-title">👤 Principal</div>
 <div class="cred-row"><span class="lbl">School Code</span><span class="val" id="outCode"></span></div>
@@ -78,98 +79,79 @@ button.pay:disabled { opacity:.55; }
 <div class="role-title">👨‍👩‍👧 Parent</div>
 <div class="cred-row"><span class="lbl">Parent Code</span><span class="val" id="outParentCode"></span></div>
 </div>
+<div class="warn" id="pendNote" style="display:none">⏳ Bank QR भुक्तानी प्रमाणित भएपछि मात्र स्कूल सक्रिय हुनेछ। तबसम्म यो विवरण सुरक्षित राख्नुहोस्।</div>
 <div class="warn">⚠️ Principal Password फेरि यहाँ देखिँदैन — अहिले नै screenshot लिनुहोस् वा सुरक्षित ठाउँमा लेखिराख्नुहोस्। Teacher/Parent Code भने पछि पनि Principal Dashboard बाट हेर्न मिल्छ।</div>
 </div>
 <div class="foot">पहिले नै School Code छ? <a href="./renew.html">यहाँबाट नवीकरण गर्नुहोस्</a></div>
 </main>
+<script src="assets/web-pay.js"></script>
 <script>
-const FUNCTION_URL = "https://icfxffduambqlbivowzs.supabase.co/functions/v1/web-school-purchase";
-let method = "esewa";
-document.getElementById("mEsewa").onclick = () => selectMethod("mEsewa", "esewa");
-document.getElementById("mKhalti").onclick = () => selectMethod("mKhalti", "khalti");
-function selectMethod(id, m) {
-method = m;
-document.querySelectorAll(".m").forEach(el => el.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-}
-function submitEsewaForm(esewaForm) {
-const form = document.createElement("form");
-form.method = esewaForm.method || "POST";
-form.action = esewaForm.action;
-for (const [name, value] of Object.entries(esewaForm.fields)) {
-const input = document.createElement("input");
-input.type = "hidden"; input.name = name; input.value = value;
-form.appendChild(input);
-}
-document.body.appendChild(form);
-form.submit();
-}
+const AMOUNT = 5000;
+const DRAFT_KEY = "ssms_new_draft";
+let method = "cips";
 const statusEl = document.getElementById("status");
 const btn = document.getElementById("payBtn");
+const $ = id => document.getElementById(id);
+$("mCips").onclick = () => selectMethod("mCips", "cips");
+$("mQr").onclick = () => selectMethod("mQr", "qr");
+function selectMethod(id, m) {
+  method = m;
+  document.querySelectorAll(".m").forEach(el => el.classList.remove("active"));
+  $(id).classList.add("active");
+  btn.textContent = m === "cips" ? "connectIPS बाट भुक्तानी गर्नुहोस्" : "Bank QR देखाउनुहोस्";
+}
+function showCreds(d, pending) {
+  $("formCard").style.display = "none";
+  $("qrCard").style.display = "none";
+  $("resultCard").style.display = "block";
+  $("outCode").textContent = d.invite_code;
+  $("outPrincipalPass").textContent = d.principal_password;
+  $("outTeacherCode").textContent = d.teacher_code || "-";
+  $("outParentCode").textContent = d.parent_code || "-";
+  $("pendNote").style.display = pending ? "block" : "none";
+  if (pending) $("resTitle").textContent = "✅ दाबी प्राप्त भयो — स्कूल कोड तयार";
+}
+function fail(msg) {
+  statusEl.textContent = msg; statusEl.className = "status err"; btn.disabled = false;
+}
 btn.addEventListener("click", async () => {
-const school_name = document.getElementById("sName").value.trim();
-const location = document.getElementById("sLoc").value.trim();
-if (!school_name || !location) {
-statusEl.textContent = "कृपया विद्यालयको नाम र ठेगाना भर्नुहोस्।";
-statusEl.className = "status err";
-return;
-}
-btn.disabled = true;
-statusEl.className = "status";
-statusEl.textContent = "तयार गर्दैछ...";
-try {
-const res = await fetch(FUNCTION_URL, {
-method: "POST",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({ school_name, location, method, return_url: window.location.href })
+  const school_name = $("sName").value.trim();
+  const location = $("sLoc").value.trim();
+  if (!school_name || !location) { fail("कृपया विद्यालयको नाम र ठेगाना भर्नुहोस्।"); return; }
+  btn.disabled = true; statusEl.className = "status"; statusEl.textContent = "तयार गर्दैछ...";
+  try {
+    // Reuse the school we already created for the same name/place (e.g. after a failed or abandoned
+    // attempt) instead of creating a second one.
+    let d = SSMSPay.load(DRAFT_KEY);
+    if (!d || d.school_name !== school_name || d.location !== location) {
+      const r = await SSMSPay.prep({ action: "create_school", school_name, location });
+      if (!r.ok) { fail("त्रुटि: " + (r.error || r._status)); return; }
+      d = Object.assign({ school_name, location }, r);
+      SSMSPay.save(DRAFT_KEY, d);
+    }
+    if (method === "cips") {
+      const p = await SSMSPay.startConnectIps({
+        schoolId: d.school_id, schoolCode: d.invite_code, amount: AMOUNT, purpose: "SCHOOL_GENERATION",
+        meta: { creds: { invite_code: d.invite_code, principal_password: d.principal_password, teacher_code: d.teacher_code, parent_code: d.parent_code } }
+      });
+      if (!p.ok) { fail("त्रुटि: " + p.error); return; }
+      statusEl.textContent = "connectIPS पेजमा लैजाँदैछ..."; statusEl.className = "status ok";
+      setTimeout(p.go, 500);
+    } else {
+      statusEl.textContent = "";
+      $("formCard").style.display = "none";
+      const qc = $("qrCard"); qc.style.display = "block";
+      await SSMSPay.renderQrCard(qc, {
+        amount: AMOUNT, amountNote: "पहिलो ३० दिन",
+        onSubmit: async ref => SSMSPay.prep({ action: "qr_claim", school_id: d.school_id, purpose: "SCHOOL_GENERATION", amount: AMOUNT, reference: ref }),
+        onDone: () => { setTimeout(() => showCreds(d, true), 1200); },
+        onBack: () => { qc.style.display = "none"; $("formCard").style.display = "block"; btn.disabled = false; }
+      });
+    }
+  } catch (e) {
+    fail("Network error, फेरि प्रयास गर्नुहोस्।");
+  }
 });
-const data = await res.json();
-if (!res.ok || !data.ok) {
-statusEl.textContent = "त्रुटि: " + (data.error || res.status);
-statusEl.className = "status err";
-btn.disabled = false;
-return;
-}
-// Save everything locally so we can show it once the eSewa/Khalti redirect
-// sends the person back here. The principal password only exists in plaintext
-// for this one moment (it's bcrypt-hashed server-side right after), so this is
-// the only chance to show it. Teacher/parent codes are stored plainly and could
-// also be re-fetched later from the Principal Dashboard.
-sessionStorage.setItem("ssms_new_code", data.invite_code);
-sessionStorage.setItem("ssms_new_pass", data.principal_password);
-sessionStorage.setItem("ssms_new_teacher", data.teacher_code);
-sessionStorage.setItem("ssms_new_parent", data.parent_code);
-statusEl.textContent = "सफल! भुक्तानी पेजमा लैजाँदैछ...";
-statusEl.className = "status ok";
-if (data.esewa_form) {
-setTimeout(() => submitEsewaForm(data.esewa_form), 500);
-} else if (data.checkout_url) {
-setTimeout(() => { window.location.href = data.checkout_url; }, 500);
-}
-} catch (e) {
-statusEl.textContent = "Network error, फेरि प्रयास गर्नुहोस्।";
-statusEl.className = "status err";
-btn.disabled = false;
-}
-});
-// If we're coming back from a payment redirect (same tab, same origin), sessionStorage
-// still has everything we generated just before leaving for eSewa/Khalti.
-const savedCode = sessionStorage.getItem("ssms_new_code");
-const savedPass = sessionStorage.getItem("ssms_new_pass");
-const savedTeacher = sessionStorage.getItem("ssms_new_teacher");
-const savedParent = sessionStorage.getItem("ssms_new_parent");
-if (savedCode && savedPass) {
-document.getElementById("formCard").style.display = "none";
-document.getElementById("resultCard").style.display = "block";
-document.getElementById("outCode").textContent = savedCode;
-document.getElementById("outPrincipalPass").textContent = savedPass;
-document.getElementById("outTeacherCode").textContent = savedTeacher || "-";
-document.getElementById("outParentCode").textContent = savedParent || "-";
-sessionStorage.removeItem("ssms_new_code");
-sessionStorage.removeItem("ssms_new_pass");
-sessionStorage.removeItem("ssms_new_teacher");
-sessionStorage.removeItem("ssms_new_parent");
-}
 </script>
 </body>
 </html>

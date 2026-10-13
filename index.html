@@ -2,6 +2,10 @@
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
+<script>
+/* connectIPS sends the payer back to https://sciencevision.com.np/?TXNID=... -- hand that over to the result page. */
+(function(){try{var q=new URLSearchParams(location.search);var t=q.get("TXNID")||q.get("txnid");if(t){location.replace("payment-result.html?TXNID="+encodeURIComponent(t));}}catch(e){}})();
+</script>
 <meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SSMS – Smart Student Monitor System | Science Vision Nepal</title>
@@ -547,7 +551,7 @@ footer.site-footer { background: var(--teal-dark); color: rgba(255,255,255,0.85)
         <a class="btn btn-service-primary" href="new-school.html">🆕 नयाँ स्कूल कोड लिनुहोस्</a>
         <a class="btn btn-service-secondary" href="renew.html">🔄 सदस्यता नवीकरण</a>
       </div>
-      <p class="service-disclaimer">यो भुक्तानी सेवा विद्यालयका लागि SSMS subscription सुरु/नवीकरण गर्नका लागि हो — eSewa र Khalti (लाइसेन्सप्राप्त नेपाली भुक्तानी सेवा प्रदायक) मार्फत प्रशोधन हुन्छ। यो भुक्तानी Google Play मार्फत हुँदैन र Google Play ले यसलाई अनुमोदन गरेको दाबी गर्दैनौं।</p>
+      <p class="service-disclaimer">यो भुक्तानी सेवा विद्यालयका लागि SSMS subscription सुरु/नवीकरण गर्नका लागि हो — connectIPS (NCHL — लाइसेन्सप्राप्त नेपाली भुक्तानी प्रणाली) वा Bank QR मार्फत प्रशोधन हुन्छ। यो भुक्तानी Google Play मार्फत हुँदैन र Google Play ले यसलाई अनुमोदन गरेको दाबी गर्दैनौं।</p>
     </div>
   </div>
 </section>

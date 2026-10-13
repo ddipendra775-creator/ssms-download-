@@ -62,88 +62,66 @@ button.pay:disabled { opacity:.55; }
 </div>
 <label>भुक्तानी विधि</label>
 <div class="methods">
-<div class="m active" data-method="esewa" id="mEsewa">eSewa</div>
-<div class="m" data-method="khalti" id="mKhalti">Khalti</div>
+<div class="m active" data-method="cips" id="mCips"><img src="assets/connectips-logo.png" alt="">connectIPS</div>
+<div class="m" data-method="qr" id="mQr">Bank QR</div>
 </div>
-<button class="pay" id="payBtn">भुक्तानी गर्नुहोस्</button>
+<button class="pay" id="payBtn">connectIPS बाट भुक्तानी गर्नुहोस्</button>
 <div class="status" id="status"></div>
 </div>
+<div class="card qrcard" id="qrCard"></div>
 <div class="foot">समस्या भएमा सम्पर्क गर्नुहोस् · <a href="./index.html">SSMS होमपेजमा फर्कनुहोस्</a></div>
 </main>
+<script src="assets/web-pay.js"></script>
 <script>
-const FUNCTION_URL = "https://icfxffduambqlbivowzs.supabase.co/functions/v1/initiate-payment";
 let amount = 5000;
-let method = "esewa";
-document.getElementById("planMonthly").onclick = () => selectPlan("planMonthly", 5000);
-document.getElementById("planYearly").onclick = () => selectPlan("planYearly", 50000);
-document.getElementById("mEsewa").onclick = () => selectMethod("mEsewa", "esewa");
-document.getElementById("mKhalti").onclick = () => selectMethod("mKhalti", "khalti");
+let method = "cips";
+const $ = id => document.getElementById(id);
+const statusEl = $("status");
+const btn = $("payBtn");
+$("planMonthly").onclick = () => selectPlan("planMonthly", 5000);
+$("planYearly").onclick = () => selectPlan("planYearly", 50000);
+$("mCips").onclick = () => selectMethod("mCips", "cips");
+$("mQr").onclick = () => selectMethod("mQr", "qr");
 function selectPlan(id, amt) {
-amount = amt;
-document.querySelectorAll(".plan").forEach(el => el.classList.remove("active"));
-document.getElementById(id).classList.add("active");
+  amount = amt;
+  document.querySelectorAll(".plan").forEach(el => el.classList.remove("active"));
+  $(id).classList.add("active");
 }
 function selectMethod(id, m) {
-method = m;
-document.querySelectorAll(".m").forEach(el => el.classList.remove("active"));
-document.getElementById(id).classList.add("active");
+  method = m;
+  document.querySelectorAll(".m").forEach(el => el.classList.remove("active"));
+  $(id).classList.add("active");
+  btn.textContent = m === "cips" ? "connectIPS बाट भुक्तानी गर्नुहोस्" : "Bank QR देखाउनुहोस्";
 }
-function submitEsewaForm(esewaForm) {
-const form = document.createElement("form");
-form.method = esewaForm.method || "POST";
-form.action = esewaForm.action;
-for (const [name, value] of Object.entries(esewaForm.fields)) {
-const input = document.createElement("input");
-input.type = "hidden"; input.name = name; input.value = value;
-form.appendChild(input);
-}
-document.body.appendChild(form);
-form.submit();
-}
-const statusEl = document.getElementById("status");
-const btn = document.getElementById("payBtn");
+function fail(msg) { statusEl.textContent = msg; statusEl.className = "status err"; btn.disabled = false; }
 btn.addEventListener("click", async () => {
-const code = document.getElementById("code").value.trim().toUpperCase();
-if (!code) {
-statusEl.textContent = "कृपया School Code प्रविष्ट गर्नुहोस्।";
-statusEl.className = "status err";
-return;
-}
-btn.disabled = true;
-statusEl.className = "status";
-statusEl.textContent = "जाँच गर्दैछ...";
-try {
-const res = await fetch(FUNCTION_URL, {
-method: "POST",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({
-school_code: code,
-amount,
-method,
-return_url: window.location.origin + window.location.pathname.replace(/renew\.html$/, "") + "index.html"
-})
-});
-const data = await res.json();
-if (!res.ok || !data.ok) {
-statusEl.textContent = data.error === "School not found"
-? "यो School Code भेटिएन। कृपया फेरि जाँच्नुहोस्।"
-: ("त्रुटि: " + (data.error || res.status));
-statusEl.className = "status err";
-btn.disabled = false;
-return;
-}
-statusEl.textContent = "सफल! भुक्तानी पेजमा लैजाँदैछ...";
-statusEl.className = "status ok";
-if (data.esewa_form) {
-setTimeout(() => submitEsewaForm(data.esewa_form), 500);
-} else if (data.checkout_url) {
-setTimeout(() => { window.location.href = data.checkout_url; }, 500);
-}
-} catch (e) {
-statusEl.textContent = "Network error, फेरि प्रयास गर्नुहोस्।";
-statusEl.className = "status err";
-btn.disabled = false;
-}
+  const code = $("code").value.trim().toUpperCase();
+  if (!code) { fail("कृपया School Code प्रविष्ट गर्नुहोस्।"); return; }
+  btn.disabled = true; statusEl.className = "status"; statusEl.textContent = "जाँच गर्दैछ...";
+  try {
+    const s = await SSMSPay.prep({ action: "lookup_school", school_code: code });
+    if (!s.ok) {
+      fail(s.error === "School not found" ? "यो School Code भेटिएन। कृपया फेरि जाँच्नुहोस्।" : ("त्रुटि: " + (s.error || s._status)));
+      return;
+    }
+    const note = amount === 50000 ? "वार्षिक (+१ वर्ष)" : "मासिक (+३० दिन)";
+    if (method === "cips") {
+      statusEl.textContent = "विद्यालय: " + s.school_name_masked + " — connectIPS खोल्दैछ...";
+      const p = await SSMSPay.startConnectIps({ schoolId: s.school_id, schoolCode: s.school_code, amount, purpose: "MEMBERSHIP_RENEWAL" });
+      if (!p.ok) { fail("त्रुटि: " + p.error); return; }
+      statusEl.className = "status ok";
+      setTimeout(p.go, 500);
+    } else {
+      statusEl.textContent = "";
+      const card = document.querySelector("main > .card"); card.style.display = "none";
+      const qc = $("qrCard"); qc.style.display = "block";
+      await SSMSPay.renderQrCard(qc, {
+        amount, amountNote: s.school_name_masked + " · " + note,
+        onSubmit: ref => SSMSPay.prep({ action: "qr_claim", school_id: s.school_id, purpose: "MEMBERSHIP_RENEWAL", amount, reference: ref }),
+        onBack: () => { qc.style.display = "none"; card.style.display = "block"; btn.disabled = false; }
+      });
+    }
+  } catch (e) { fail("Network error, फेरि प्रयास गर्नुहोस्।"); }
 });
 </script>
 </body>

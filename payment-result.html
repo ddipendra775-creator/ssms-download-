@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>भुक्तानी नतिजा — SSMS</title>
+<style>
+:root { --navy:#152a6e; --navy-dark:#0f1f52; --green:#1f8a5c; --line:#dfe3ef; }
+* { box-sizing: border-box; }
+body { margin:0; background:linear-gradient(180deg,#f5f7fd,#e3e9fb); color:var(--navy-dark); font-family:-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif; display:flex; justify-content:center; padding:40px 16px; }
+main { width:100%; max-width:440px; }
+.logo { display:flex; align-items:center; justify-content:center; gap:10px; font-weight:800; font-size:1.25rem; color:var(--navy); margin-bottom:24px; }
+.logo img { width:34px; height:34px; border-radius:9px; object-fit:cover; }
+.card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px; box-shadow:0 8px 24px rgba(21,42,110,.06); margin-bottom:16px; text-align:center; }
+h1 { font-size:1.05rem; margin:0 0 8px; color:var(--navy); }
+p { margin:0 0 14px; color:#6b7794; font-size:.88rem; line-height:1.55; }
+.ok h1 { color:#166a45; } .bad h1 { color:#c0392b; }
+button, a.btn { display:block; width:100%; padding:13px; border:none; border-radius:12px; background:linear-gradient(135deg,var(--navy),var(--navy-dark)); color:#fff; font-size:.95rem; font-weight:800; cursor:pointer; text-decoration:none; margin-top:10px; }
+button.sec { background:#fff; color:var(--navy); border:1px solid var(--line); }
+.creds { text-align:left; margin-top:14px; }
+.role-title { font-size:.8rem; font-weight:800; color:#166a45; margin:10px 0 6px; }
+.cred-row { display:flex; justify-content:space-between; background:#fff; border:1px solid #bdf0d4; border-radius:8px; padding:9px 12px; margin-bottom:6px; }
+.lbl { font-size:.7rem; color:#6b7794; font-weight:700; text-transform:uppercase; }
+.val { font-weight:800; color:var(--navy); letter-spacing:.5px; }
+.warn { font-size:.78rem; color:#b45309; background:#fef3c7; border-radius:8px; padding:8px 10px; margin-top:12px; text-align:left; }
+.spin { width:34px; height:34px; border:4px solid #dfe3ef; border-top-color:#152a6e; border-radius:50%; margin:6px auto 14px; animation:sp 1s linear infinite; }
+@keyframes sp { to { transform:rotate(360deg); } }
+.txn { font-size:.72rem; color:#8894b3; word-break:break-all; }
+</style>
+</head>
+<body>
+<main>
+<div class="logo"><img src="assets/ssms-logo.jpg" alt="SSMS logo"> SSMS</div>
+<div class="card" id="box"></div>
+</main>
+<script src="assets/web-pay.js"></script>
+<script>
+const box = document.getElementById("box");
+const q = new URLSearchParams(location.search);
+let txn = (q.get("TXNID") || q.get("txnid") || "").trim();
+if (!txn) { try { txn = (JSON.parse(localStorage.getItem("ssms_last_txn")) || ""); } catch (e) {} }
+const meta = txn ? (SSMSPay.load("ssms_pay_" + txn) || {}) : {};
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
+function row(parent, label, value) {
+  const r = el("div", "cred-row"); r.appendChild(el("span", "lbl", label)); r.appendChild(el("span", "val", value)); parent.appendChild(r);
+}
+function show(cls, title, text) {
+  box.className = "card " + cls; box.innerHTML = "";
+  if (cls === "wait") box.appendChild(el("div", "spin"));
+  box.appendChild(el("h1", "", title));
+  if (text) box.appendChild(el("p", "", text));
+}
+function addTxn() { if (txn) box.appendChild(el("div", "txn", "Transaction ID: " + txn)); }
+function homeBtn() { const a = el("a", "btn", "SSMS होमपेजमा फर्कनुहोस्"); a.href = "./index.html"; box.appendChild(a); }
+function retryBtn() { const b = el("button", "", "फेरि जाँच्नुहोस्"); b.onclick = verify; box.appendChild(b); }
+
+function showSuccess() {
+  if (meta.kind === "new" && meta.creds) {
+    show("ok", "✅ भुक्तानी सफल — तपाईंको स्कूल सक्रिय भयो!", "तलको विवरण अहिले नै सुरक्षित गर्नुहोस्।");
+    const c = el("div", "creds");
+    c.appendChild(el("div", "role-title", "👤 Principal"));
+    row(c, "School Code", meta.creds.invite_code); row(c, "Password", meta.creds.principal_password);
+    c.appendChild(el("div", "role-title", "📚 Teacher")); row(c, "Teacher Code", meta.creds.teacher_code || "-");
+    c.appendChild(el("div", "role-title", "👨‍👩‍👧 Parent")); row(c, "Parent Code", meta.creds.parent_code || "-");
+    c.appendChild(el("div", "warn", "⚠️ Principal Password फेरि यहाँ देखिँदैन — screenshot लिनुहोस् वा सुरक्षित ठाउँमा लेख्नुहोस्। Teacher/Parent Code पछि Principal Dashboard बाट पनि हेर्न मिल्छ।"));
+    box.appendChild(c);
+    const b = el("button", "sec", "मैले सुरक्षित गरेँ — यो विवरण मेटाउनुहोस्");
+    b.onclick = () => { SSMSPay.drop("ssms_pay_" + txn); SSMSPay.drop("ssms_new_draft"); meta.creds = null; show("ok", "✅ भुक्तानी सफल", "तपाईंको स्कूल सक्रिय छ।"); addTxn(); homeBtn(); };
+    box.appendChild(b);
+    return;
+  }
+  show("ok", "✅ भुक्तानी सफल", (meta.kind === "new" ? "तपाईंको स्कूल सक्रिय भयो।" : "तपाईंको सदस्यता नवीकरण भयो।") +
+       (meta.school_code ? " School Code: " + meta.school_code : ""));
+  addTxn(); homeBtn();
+}
+
+let busy = false;
+async function verify() {
+  if (busy) return; busy = true;
+  show("wait", "भुक्तानी जाँच्दै...", "connectIPS सँग पुष्टि गर्दैछ — कृपया यो पेज बन्द नगर्नुहोस् (केही सेकेन्ड लाग्न सक्छ)।");
+  let r;
+  try { r = await SSMSPay.call("connectips-verify", { gateway_ref: txn }, 60000); }
+  catch (e) { r = { verified: false, status: "PENDING", message: "सम्पर्क हुन सकेन।" }; }
+  busy = false;
+  if (r.verified) { showSuccess(); return; }
+  if (r.status === "FAILED") {
+    show("bad", "भुक्तानी सफल भएन", r.message || ""); addTxn();
+    const a = el("a", "btn", "फेरि प्रयास गर्नुहोस्"); a.href = meta.kind === "new" ? "new-school.html" : "renew.html"; box.appendChild(a);
+    homeBtn(); return;
+  }
+  show("bad", "भुक्तानी अझै पुष्टि भएको छैन", (r.message || "भुक्तानी पूरा भएको छैन।") + " यदि पैसा कटेको छ भने केही बेरपछि फेरि जाँच्नुहोस्।");
+  addTxn(); retryBtn(); homeBtn();
+}
+if (!txn) { show("bad", "Transaction ID फेला परेन", "भुक्तानी गरिसक्नुभएको हो भने support मा सम्पर्क गर्नुहोस्।"); homeBtn(); }
+else verify();
+</script>
+</body>
+</html>
