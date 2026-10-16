@@ -70,6 +70,16 @@
     return {
       ok: true, txn: txn,
       go: function () {
+        // Tell the payer where the QR is on the connectIPS page (we cannot scroll another site's
+        // page from here), then open the gateway after a short pause.
+        var hint = document.createElement("div");
+        hint.setAttribute("style", "position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#152a6e;color:#fff;padding:16px 18px;font:600 .92rem/1.6 system-ui,sans-serif;text-align:center;box-shadow:0 -4px 18px rgba(0,0,0,.25)");
+        hint.textContent = "connectIPS पेज खुल्दैछ — पेजमा तल स्क्रोल गरेर “Scan & Pay” को QR स्क्यान गर्नुहोस्। तिरेपछि “Click here after payment” थिच्नुहोस्।";
+        document.body.appendChild(hint);
+        setTimeout(submitForm, 2600);
+      }
+    };
+    function submitForm() {
         var f = document.createElement("form");
         f.method = "POST"; f.action = data.gateway_url;
         f.target = OPEN_IN_NEW_TAB ? "_blank" : "_self";
@@ -81,8 +91,7 @@
         });
         document.body.appendChild(f);
         f.submit();
-      }
-    };
+    }
   }
 
   // Bank QR card: shows the same QR + bank details the app shows (read from app_config on the
